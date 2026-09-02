@@ -4,6 +4,7 @@ import { caseStudySchema, articleSchema } from "@/lib/content/types";
 describe("content contracts", () => {
   it("validates minimal case study frontmatter and defaults metrics", () => {
     const result = caseStudySchema.safeParse({
+      slug: "example",
       title: "Example Case Study",
       date: "2026-01-01",
     });
@@ -13,6 +14,7 @@ describe("content contracts", () => {
 
   it("validates article frontmatter and defaults tags", () => {
     const result = articleSchema.parse({
+      slug: "example",
       title: "Example Article",
       date: "2026-01-01",
     });
@@ -27,6 +29,7 @@ describe("content contracts", () => {
 
   it("round-trips case study metrics", () => {
     const result = caseStudySchema.parse({
+      slug: "example",
       title: "Example",
       date: "2026-01-01",
       metrics: [{ label: "NPS uplift", value: "+32" }],
