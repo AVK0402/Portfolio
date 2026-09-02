@@ -73,6 +73,29 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Responsive Strategy
+
+Mobile-first and composition-driven. Four supported device classes
+(mobile / tablet / desktop / large desktop) map to the `--breakpoint-*`
+tokens (sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1440).
+
+Rules:
+
+1. **Base styles target mobile.** Breakpoint-prefixed utilities only add
+   or change behavior upward (`flex` base, `md:grid md:grid-cols-2`).
+2. **Intentional composition, not scaling.** Layouts change arrangement
+   across device classes (stack → columns, spacing steps) via composed
+   primitives (`Container`, `Section`) — never a desktop layout shrunk
+   down.
+3. **No viewport hacks.** No raw `px` breakpoints, no `min-width`
+   media-query CSS in components, no viewport-unit typography tricks.
+   Use breakpoint variants and, when a component must adapt to its own
+   box rather than the viewport, Tailwind v4 container queries
+   (`@container` + `@md:` variants) — e.g. cards that reflow inside
+   grids.
+4. **Tokens only.** All widths/spacing come from `--container-*` and
+   `--space-*`; breakpoints from `--breakpoint-*` only.
+
 ## Animation System
 
 Motion is a system, not page effects. Rules are enforced via the barrel
