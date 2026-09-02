@@ -157,3 +157,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-body);
 }
+
+/* ---------------------------------------------------------------------------
+ * Focus — visible, consistent keyboard focus everywhere (WCAG 2.2 AA 2.4.7,
+ * 2.4.11 focus-not-obscured relies on layout care; the ring is global).
+ * ------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

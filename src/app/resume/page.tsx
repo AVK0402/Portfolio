@@ -18,7 +18,7 @@ export default async function ResumePage() {
     getValues(),
   ]);
   return (
-    <main>
+    <main id="main-content">
       <Container className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Resume</h1>
         <p className="text-muted-foreground">

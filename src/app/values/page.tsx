@@ -8,7 +8,7 @@ export const metadata = buildMetadata({ title: "Values" });
 export default async function ValuesPage() {
   const values = await getValues();
   return (
-    <main>
+    <main id="main-content">
       <Container className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Values</h1>
         <div className="mt-10 flex flex-col gap-10">

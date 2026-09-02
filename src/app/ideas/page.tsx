@@ -9,7 +9,7 @@ export const metadata = buildMetadata({ title: "Ideas" });
 export default async function IdeasPage() {
   const articles = await getArticles();
   return (
-    <main>
+    <main id="main-content">
       <Container className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Ideas</h1>
         <div className="mt-10 flex flex-col gap-10">

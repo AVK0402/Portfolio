@@ -18,7 +18,7 @@ export default async function Home() {
   const [caseStudies, articles] = await Promise.all([getCaseStudies(), getArticles()]);
 
   return (
-    <main>
+    <main id="main-content">
       <Section className="flex flex-1 items-center">
         <Container className="text-center">
           <h1 className="text-4xl font-semibold tracking-tight">

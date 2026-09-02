@@ -35,7 +35,7 @@ export default async function CaseStudyPage({ params }: Props) {
   if (!item) notFound();
 
   return (
-    <main>
+    <main id="main-content">
       <Container className="py-16">
         <CaseStudyHero caseStudy={item.meta} />
         <div className="mt-10">

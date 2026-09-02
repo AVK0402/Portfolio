@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils/cn";
 
 /**
- * Section heading: consistent section header pattern.
- * Default level is h2 — pages own exactly one h1.
+ * Section heading. `as` supports h1 (one per page, detail-page heroes),
+ * h2 (default, section titles) and h3 (subsections) so heading
+ * hierarchy can never skip levels.
  */
 export function SectionHeading({
   children,
@@ -10,12 +11,13 @@ export function SectionHeading({
   className,
 }: {
   children: React.ReactNode;
-  as?: "h2" | "h3";
+  as?: "h1" | "h2" | "h3";
   className?: string;
 }) {
-  return (
-    <Tag className={cn("text-2xl font-semibold tracking-tight", className)}>
-      {children}
-    </Tag>
-  );
+  const styles: Record<"h1" | "h2" | "h3", string> = {
+    h1: "text-4xl font-semibold tracking-tight",
+    h2: "text-2xl font-semibold tracking-tight",
+    h3: "text-xl font-semibold",
+  };
+  return <Tag className={cn(styles[Tag], className)}>{children}</Tag>;
 }

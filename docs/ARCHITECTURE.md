@@ -73,6 +73,34 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Accessibility (WCAG 2.2 AA)
+
+Accessibility is part of the component architecture, enforced by tests —
+never a final QA pass.
+
+| Requirement           | Where it is enforced                                                                                                                                        |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Semantic HTML         | Landmarks (`main`/`header`/`nav`/`footer`) in layout + pages; semantic primitives (`SectionHeading`, `TextField`, `Divider`) rather than styled divs        |
+| Heading hierarchy     | `SectionHeading` restricted to h1/h2/h3; exactly one `h1` per page (detail heroes use `as="h1"`)                                                            |
+| Keyboard navigation   | `SkipLink` is the first tab stop (`#main-content` on every page); native focusable elements only — no div-as-button                                         |
+| Focus states          | Global `:focus-visible` ring (tokens) in `globals.css`; never `outline: none`                                                                               |
+| Accessible navigation | `<nav aria-label="Primary">`, data-driven from `data/navigation.ts`                                                                                         |
+| Accessible links      | All internal links via `ui/Link` (next/link); descriptive text, no "click here" copy rule                                                                   |
+| Accessible forms      | `ui/TextField` — programmatic label, `aria-describedby` hint, `aria-invalid` + `role="alert"` errors                                                        |
+| Image alt text        | `next/image` makes `alt` mandatory via `ui/Image`; decorative images use `alt=""`                                                                           |
+| Reduced motion        | Global `MotionConfig reducedMotion="user"`; CSS motion documented per token                                                                                 |
+| Sufficient contrast   | Semantic color tokens checked against 4.5:1 (text) / 3:1 (UI) — current neutral palette passes; any new color must be checked before entering `globals.css` |
+| Screen readers        | `lang` from config, landmarks, labelled controls, `sr-only` utilities, JSON-LD for content semantics                                                        |
+
+**Automated gates** (must stay green):
+
+- Playwright: axe scan (`wcag2a`, `wcag2aa`, `wcag22aa`) on key pages —
+  zero violations; skip-link keyboard test; single-h1 + landmark assertions.
+- Unit: `TextField` label/hint/error association tests.
+- ESLint `jsx-a11y` rules (via `eslint-config-next/core-web-vitals`) on every file.
+
+New interactive components must ship with their a11y unit tests in the same PR.
+
 ## Responsive Strategy
 
 Mobile-first and composition-driven. Four supported device classes

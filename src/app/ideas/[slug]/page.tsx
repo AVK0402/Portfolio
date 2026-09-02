@@ -35,7 +35,7 @@ export default async function ArticlePage({ params }: Props) {
   if (!item) notFound();
 
   return (
-    <main>
+    <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(item.meta)) }}

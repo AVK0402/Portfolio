@@ -6,7 +6,7 @@ export const metadata = buildMetadata({ title: "Contact" });
 /** Contact — structure only; contact mechanics decided in the design phase. */
 export default function ContactPage() {
   return (
-    <main>
+    <main id="main-content">
       <Container className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Contact</h1>
       </Container>
