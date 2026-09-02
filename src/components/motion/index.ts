@@ -23,3 +23,4 @@
  * TextReveal, PageTransition.
  */
 export { Reveal } from "./Reveal";
+export { MotionProvider } from "./motion-provider";

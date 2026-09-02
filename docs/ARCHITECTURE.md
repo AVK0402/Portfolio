@@ -73,6 +73,35 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Performance
+
+Targets (Lighthouse, production build on Vercel): Performance 90+,
+Accessibility 95+, Best Practices 95+, SEO 95+. Measured via Lighthouse CI
+on Vercel preview deployments — do not tune before measuring.
+
+Architecture guarantees (already structural, not aspirational):
+
+- **Server Components by default.** Exactly two client boundaries exist
+  (motion provider, analytics adapter). ESLint `no-restricted-imports`
+  blocks `motion/*` and `@vercel/analytics` imports outside their
+  designated directories — the client boundary is lint-enforced.
+- **Static generation.** Every route is `○ Static` or `● SSG`
+  (`generateStaticParams` for `/work/[slug]`, `/ideas/[slug]`). Content is
+  read at build time; there is no runtime data fetching.
+- **Optimized images.** All imagery flows through `ui/Image`
+  (`next/image`): responsive sizes, modern formats, lazy loading by
+  default, `priority` only for above-fold heroes (a reviewable prop).
+- **Fonts.** `next/font` self-hosts with `font-display: swap`, preloads
+  subsets, and produces zero render-blocking third-party requests.
+- **Dependencies.** Every dependency has a documented purpose; adding one
+  requires justification in the PR. No tag managers, no A/B tooling, no
+  client-side CMS SDKs.
+- **No render-blocking third-party scripts.** The only third-party script
+  is the cookie-less Vercel Analytics beacon, loaded async after hydration.
+
+Budgets (initial-load JS, gzipped): aim < 100 KB route-level; flag anything
+above 150 KB. Check with the Next.js build analyzer when in doubt.
+
 ## Accessibility (WCAG 2.2 AA)
 
 Accessibility is part of the component architecture, enforced by tests —

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
-import { MotionProvider } from "@/components/motion/motion-provider";
+import { MotionProvider } from "@/components/motion";
 import { Analytics } from "@/components/analytics/analytics";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
