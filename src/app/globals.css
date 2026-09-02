@@ -3,12 +3,127 @@
 /*
  * Design-system foundations — Tailwind v4 CSS-first token layer.
  *
- * Values are deliberately neutral/placeholder: this phase defines the
- * TOKEN ARCHITECTURE (semantic names, scales, layering), not visual
- * design. Future visual work changes values here — components consume
- * only semantic tokens, never raw values.
+ * TOKEN ARCHITECTURE, not visual design: every value below is a
+ * deliberate, refineable placeholder. The design phase changes values
+ * here — components consume tokens only, never raw values.
+ *
+ * Namespaces:
+ *   --font-*        font families            -> font-* utilities
+ *   --text-*        type scale               -> text-* utilities
+ *   --space-*       semantic spacing         -> p-(--space-md), gap-(--space-lg)
+ *   --container-*   container widths         -> max-w-lg, max-w-prose… utilities
+ *   --breakpoint-*  responsive breakpoints   -> sm/md/lg/xl variants
+ *   --radius-*      corner radii             -> rounded-* utilities
+ *   --shadow-*      elevation levels         -> shadow-* utilities
+ *   --ease-*        motion easings           -> ease-* utilities
+ *   --motion-*      motion durations         -> duration-(--motion-*)
+ *   --z-*           stacking layers          -> z-[var(--z-*)]
  */
 
+/* ---------------------------------------------------------------------------
+ * Typography
+ * Font families are wired to next/font CSS variables (see app/layout.tsx).
+ * The design phase may swap display/body faces independently.
+ * ------------------------------------------------------------------------- */
+:root {
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  /* Type scale (rem). Display/body face refinements happen at design phase. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.25rem;
+  --text-6xl: 4rem;
+
+  /* -------------------------------------------------------------------------
+   * Spacing — semantic steps (4px base grid)
+   * ------------------------------------------------------------------------- */
+  --space-3xs: 0.25rem; /*  4px */
+  --space-2xs: 0.5rem; /*   8px */
+  --space-xs: 0.75rem; /*  12px */
+  --space-sm: 1rem; /*      16px */
+  --space-md: 1.5rem; /*    24px */
+  --space-lg: 2rem; /*      32px */
+  --space-xl: 3rem; /*      48px */
+  --space-2xl: 4rem; /*     64px */
+  --space-3xl: 6rem; /*     96px */
+
+  /* -------------------------------------------------------------------------
+   * Container widths — content measure per layout context
+   * ------------------------------------------------------------------------- */
+  --container-prose: 44rem; /* long-form reading measure */
+  --container-sm: 48rem; /*    narrow content  */
+  --container-md: 64rem; /*    standard content */
+  --container-lg: 80rem; /*    wide layouts     */
+  --container-xl: 90rem; /*    full-width maximum */
+
+  /* -------------------------------------------------------------------------
+   * Breakpoints — mobile-first, aligned to container steps
+   * ------------------------------------------------------------------------- */
+  --breakpoint-sm: 40rem; /*  640px */
+  --breakpoint-md: 48rem; /*  768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-2xl: 90rem; /* 1440px */
+
+  /* -------------------------------------------------------------------------
+   * Border radius
+   * ------------------------------------------------------------------------- */
+  --radius-none: 0rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* -------------------------------------------------------------------------
+   * Shadows — restrained elevation ladder (default aesthetic: flat)
+   * ------------------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+
+  /* -------------------------------------------------------------------------
+   * Motion — durations (pair with --ease-* below)
+   * Use as: duration-(--motion-fast) | duration-(--motion-normal) | etc.
+   * ------------------------------------------------------------------------- */
+  --motion-fast: 150ms; /*  hover/focus feedback */
+  --motion-normal: 300ms; /* reveals, small transitions */
+  --motion-slow: 600ms; /*  hero/page-level moments */
+
+  /* -------------------------------------------------------------------------
+   * Motion — easings
+   * ------------------------------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* default UI easing */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1); /* elements entering */
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0); /* elements leaving */
+
+  /* -------------------------------------------------------------------------
+   * Z-index — named layers only; raw z values are forbidden in components
+   * ------------------------------------------------------------------------- */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* Semantic color tokens — the ONLY colors components may reference. */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -16,31 +131,14 @@
   --muted-foreground: #737373;
   --accent: #171717;
   --border: #e5e5e5;
-}
 
-@theme inline {
-  /* Semantic color tokens — the ONLY colors components may reference. */
+  /* Keep color tokens available to Tailwind utilities (single definition point). */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-border: var(--border);
-
-  /* Typography — wired to next/font CSS variables. */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
-  /* Consistent radii scale. */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-
-  /* Standardized z-index layers. */
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-overlay: 300;
-  --z-modal: 400;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -57,4 +155,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-body);
 }

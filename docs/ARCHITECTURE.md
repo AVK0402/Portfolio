@@ -73,6 +73,34 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Design Tokens
+
+All design values live as CSS variables in `src/app/globals.css` (Tailwind v4
+CSS-first `@theme` layer). Values are refineable placeholders — the design
+phase changes them there, and every component updates automatically.
+
+| Namespace        | Purpose          | Consumption in components                   |
+| ---------------- | ---------------- | ------------------------------------------- |
+| `--font-*`       | font families    | `font-display`, `font-body` utilities       |
+| `--text-*`       | type scale       | `text-lg`, `text-3xl`… utilities            |
+| `--space-*`      | semantic spacing | `p-(--space-md)`, `gap-(--space-lg)` syntax |
+| `--container-*`  | content measures | `max-w-md`, `max-w-prose`… utilities        |
+| `--breakpoint-*` | breakpoints      | `md:`, `lg:`… variants                      |
+| `--radius-*`     | corner radii     | `rounded-md`, `rounded-full`… utilities     |
+| `--shadow-*`     | elevation ladder | `shadow-sm`, `shadow-lg`… utilities         |
+| `--motion-*`     | motion durations | `duration-(--motion-normal)` syntax         |
+| `--ease-*`       | motion easings   | `ease-entrance`, `ease-standard` utilities  |
+| `--z-*`          | stacking layers  | `z-[var(--z-modal)]` syntax                 |
+
+Rules:
+
+- **No raw values in components.** No `px-6` against an invented scale, no
+  `duration-300`, no `z-50`. Use the token or add one to `globals.css` first.
+- Semantic color tokens (`--background`, `--foreground`, `--muted`,
+  `--muted-foreground`, `--accent`, `--border`) are the only allowed colors.
+- Motion durations pair with easings; all motion respects
+  `prefers-reduced-motion` via `MotionConfig reducedMotion="user"`.
+
 ## Folder Structure
 
 The structure below is the agreed target architecture — keep it current.
