@@ -73,6 +73,25 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Animation System
+
+Motion is a system, not page effects. Rules are enforced via the barrel
+`src/components/motion/index.ts` — components import animations only from
+`@/components/motion`.
+
+- **Boundary:** `MotionProvider` (LazyMotion `domAnimation`, strict; `m.*`
+  components only) keeps the animation bundle minimal; server trees stay
+  static. Reduced motion is configured once via `MotionConfig
+reducedMotion="user"`.
+- **Tokens:** durations/easings come from CSS tokens (`--motion-*`,
+  `--ease-*`); `components/motion/tokens.ts` mirrors them for Motion's JS
+  API and must stay in sync.
+- **Primitives:** one per genuine repeated pattern, content-agnostic
+  (children + className only). Today: `Reveal` (viewport entrance) — the
+  canonical example of the contract. Future candidates, same contract:
+  `FadeIn`, `Stagger`, `ImageReveal`, `TextReveal`, `PageTransition`. Do not
+  build them preemptively.
+
 ## Design Tokens
 
 All design values live as CSS variables in `src/app/globals.css` (Tailwind v4
