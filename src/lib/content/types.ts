@@ -9,6 +9,8 @@ import type { CaseStudy } from "@/types/work";
  */
 
 const baseSchema = z.object({
+  /** URL slug — defaults to the file name in the MDX adapter. */
+  slug: z.string().min(1),
   title: z.string().min(1),
   /** ISO 8601 date string. */
   date: z.string().min(1),

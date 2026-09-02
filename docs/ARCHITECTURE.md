@@ -73,6 +73,32 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Testing Strategy
+
+Pragmatic and behavior-focused. No test exists purely to raise counts.
+
+**Unit (Vitest, `tests/unit/`)** — only where logic warrants it:
+content frontmatter contracts (Zod round-trips) and a11y contracts of
+interactive primitives (`TextField` label/hint/error association). Pure
+presentation components get no unit tests; they are covered by E2E.
+
+**E2E (Playwright, `tests/e2e/`)** — critical user journeys against the
+production build:
+
+| Spec            | Flow                                                                                                                                                                                                 |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flows.spec.ts` | Homepage navigation (all 7 top-level routes), case-study navigation (list → detail), article navigation (list → detail, MDX body renders), resume access (page + PDF download), contact reachability |
+| `smoke.spec.ts` | Document structure (lang, landmarks, single h1), skip-link keyboard behavior, axe WCAG 2.2 AA scan (zero violations)                                                                                 |
+
+Rules:
+
+- One test per user journey; a failure must mean a user-visible break.
+- Tests assert behavior (roles, headings, URLs, downloads), never CSS or
+  markup specifics.
+- New critical flows get a spec in the same PR; incidental pages do not.
+- `pnpm verify` gates unit tests; Playwright runs against the built app
+  (`pnpm build && pnpm start`) locally and in CI.
+
 ## Performance
 
 Targets (Lighthouse, production build on Vercel): Performance 90+,

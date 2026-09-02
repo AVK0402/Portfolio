@@ -1,5 +1,6 @@
 import { buildMetadata } from "@/lib/seo/metadata";
 import { Container } from "@/components/layout/Container";
+import { Link } from "@/components/ui/Link";
 import { getSpeaking } from "@/lib/content/getSpeaking";
 import { getValues } from "@/lib/content/getValues";
 
@@ -25,6 +26,14 @@ export default async function ResumePage() {
           {experience.length} roles · {awards.length} awards · {speaking.length}{" "}
           engagements · {values.length} values
         </p>
+        <Link
+          href="/documents/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-foreground text-background mt-(--space-md) inline-block rounded-md px-(--space-sm) py-(--space-2xs) font-medium"
+        >
+          Download resume (PDF)
+        </Link>
       </Container>
     </main>
   );
