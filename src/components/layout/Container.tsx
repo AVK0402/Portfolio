@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { cn } from "@/lib/utils/cn";
 
 /**
  * Layout primitive: constrains content width and centers it.
@@ -7,10 +7,12 @@ import type { ReactNode } from "react";
  */
 export function Container({
   children,
-  className = "",
+  className,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={`mx-auto w-full max-w-6xl px-6 ${className}`}>{children}</div>;
+  return (
+    <div className={cn("mx-auto w-full max-w-6xl px-6", className)}>{children}</div>
+  );
 }

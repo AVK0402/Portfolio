@@ -1,26 +1,38 @@
 import { siteConfig } from "@/config/site";
-import { getCollection } from "@/lib/content";
+import { routes } from "@/config/navigation";
+import { getCaseStudies } from "@/lib/content/getCaseStudies";
+import { getArticles } from "@/lib/content/getArticles";
 import type { MetadataRoute } from "next";
 
 /**
  * Sitemap is generated from the content layer — new content collections
- * are added here as routes come online, never maintained by hand.
- * Static routes can be appended to the staticRoutes array.
+ * are added here as they come online, never maintained by hand.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: siteConfig.url,
-      lastModified: new Date(),
-    },
+  const [caseStudies, articles] = await Promise.all([getCaseStudies(), getArticles()]);
+
+  const staticPaths = [
+    routes.home,
+    routes.about,
+    routes.work,
+    routes.values,
+    routes.speaking,
+    routes.ideas,
+    routes.resume,
+    routes.contact,
   ];
 
-  const articles = await getCollection("articles");
-
   return [
-    ...staticRoutes,
+    ...staticPaths.map((path) => ({
+      url: `${siteConfig.url}${path}`,
+      lastModified: new Date(),
+    })),
+    ...caseStudies.map(({ meta }) => ({
+      url: `${siteConfig.url}${routes.caseStudy(meta.slug)}`,
+      lastModified: new Date(meta.date),
+    })),
     ...articles.map(({ meta }) => ({
-      url: `${siteConfig.url}/articles/${meta.slug}`,
+      url: `${siteConfig.url}${routes.article(meta.slug)}`,
       lastModified: new Date(meta.date),
     })),
   ];

@@ -23,7 +23,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@content/*": ["./content/*"],
+      "@mdx-components": ["./mdx-components.tsx"]
     }
   },
   "include": [

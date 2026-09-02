@@ -75,42 +75,61 @@ These rules are binding for all contributions:
 
 ## Folder Structure
 
+The structure below is the agreed target architecture — keep it current.
+
 ```
-content/                     # MDX collections (content source, today)
-  articles/                  # thought leadership
-  portfolio/                 # transformation stories (future)
-  speaking/                  # talks & teaching (future)
-  awards/ media/             # future collections
-docs/                        # architecture documentation
+content/                        # Content sources
+  work/*.mdx                    # Case studies (tresata, indegene, walmart, software-ag)
+  ideas/*.mdx                   # Thought-leadership articles
+  speaking/engagements.ts       # Typed TS data (structured, not MDX)
+  values/principles.ts          # Typed TS data (structured, not MDX)
+docs/                           # Architecture documentation
+public/
+  images/{profile,work,speaking,editorial}/
+  documents/resume.pdf          # Downloadable resume
+  icons/
 src/
-  app/                       # Next.js App Router — routes ONLY (thin)
-    layout.tsx  page.tsx  sitemap.ts  robots.ts
+  app/                          # Next.js App Router — routes ONLY (thin)
+    layout.tsx  page.tsx  globals.css  sitemap.ts  robots.ts
+    about/  values/  speaking/  resume/  contact/
+    work/[slug]/                # Case-study index + SSG detail pages
+    ideas/[slug]/               # Article index + SSG detail pages
   components/
-    ui/                      # design-system primitives (Container, Heading, Text…)
-    blocks/                  # composed sections (hero, article list… — future)
-    layout/                  # header/footer/shell (future)
-    motion/                  # animation boundaries (client-only)
-    analytics/               # provider mount point
-  config/site.ts             # single source of truth: identity, nav, env
+    layout/                     # Header, Navigation, Footer, Container
+    sections/                   # Homepage sections (composed per design phase)
+    work/                       # CaseStudyCard, CaseStudyHero, CaseStudySection, ImpactMetrics
+    ideas/                      # ArticleCard, ArticleHeader, ArticleContent
+    speaking/                   # SpeakingCard, EngagementList
+    ui/                         # Button, Link, SectionHeading, Divider, Image
+    motion/                     # Animation boundary (client-only, added for LazyMotion)
+    analytics/                  # Provider mount point (added for analytics abstraction)
+  config/                       # site.ts (identity + routes), navigation.ts, constants.ts
+  content/                      # Getter modules — the ONLY import surface for the UI
+    getCaseStudies.ts  getArticles.ts  getSpeaking.ts  getValues.ts
+    types.ts                    # Zod frontmatter contracts (not imported by UI)
+    sources/mdx.ts              # FS adapter (only module that knows content = files)
+  data/                         # Static structured data: profile, experience, awards, navigation
   lib/
-    content/                 # content abstraction layer
-      types.ts               # Zod schemas = content contracts
-      sources/mdx.ts         # file-system MDX adapter (the only FS-aware module)
-      index.ts               # facade: the only import surface for the UI
-    analytics/               # provider-agnostic analytics + adapters
-    seo/metadata.ts          # metadata + JSON-LD factories
-  styles → globals.css       # Tailwind v4 @theme token layer
-tests/e2e/                   # Playwright specs
-mdx-components.tsx           # MDX→design-system component mapping
+    seo/                        # metadata.ts, structured-data.ts
+    utils/cn.ts                 # Dependency-free class join
+    analytics/                  # Provider-agnostic analytics + adapters
+  types/                        # Domain types: profile, work, article, speaking, value
+tests/
+  unit/                         # Vitest (content contracts, utils)
+  e2e/                          # Playwright
+mdx-components.tsx              # MDX→design-system component mapping
 ```
 
 ## Content Architecture
 
-Collections are defined once in `src/lib/content/types.ts`:
-`articles`, `portfolio`, `speaking`, `awards`, `media`. Each has a Zod schema
-validated at load time (bad frontmatter fails the build — content quality is
-enforced, not assumed). Frontmatter contract example:
-`content/articles/_example.mdx`.
+- **MDX collections** (`content/work`, `content/ideas`): frontmatter validated
+  by Zod at load time (invalid content fails the build). Drafts excluded in
+  production. Getters: `getCaseStudies()`, `getCaseStudy(slug)`,
+  `getArticles()`, `getArticle(slug)`.
+- **Typed TS data** (`content/speaking`, `content/values`, `src/data`): fully
+  structured content (engagements, values, profile, experience, awards) lives
+  as typed modules — no parser needed, type-checked at compile time.
+- UI components import getters only — never `fs`, MDX, or data modules.
 
 ## Quality Gates
 

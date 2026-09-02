@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 interface PageMetadataInput {
   title: string;
   description?: string;
-  /** Path without leading slash, e.g. "articles/my-post". Omit for home. */
+  /** Path without leading slash, e.g. "work/my-case-study". Omit for home. */
   path?: string;
   noIndex?: boolean;
 }
@@ -34,16 +34,5 @@ export function buildMetadata({
       type: "website",
     },
     robots: noIndex ? { index: false, follow: false } : undefined,
-  };
-}
-
-/** Organization/Person JSON-LD factory for structured data. */
-export function personJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.author.name,
-    jobTitle: siteConfig.author.role,
-    url: siteConfig.url,
   };
 }

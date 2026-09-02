@@ -26,17 +26,10 @@ export const siteConfig = {
 
 export type SiteConfig = typeof siteConfig;
 
-/** Primary navigation is data-driven so routes/layouts never hardcode it. */
+/** Convenience schema for navigation items (see data/navigation.ts). */
 export const navigationSchema = z.object({
   label: z.string().min(1),
   href: z.string().min(1),
 });
 
 export type NavigationItem = z.infer<typeof navigationSchema>;
-
-/**
- * Placeholder navigation contract. Actual IA (information architecture)
- * is intentionally deferred — populate when content architecture is
- * finalized. Routes that do not exist yet must not be added here.
- */
-export const primaryNavigation: NavigationItem[] = [];

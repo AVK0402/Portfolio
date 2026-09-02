@@ -1,37 +1,42 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { collectionSchemas, type CollectionId, type ContentItem } from "../types";
-import type { CollectionMetaMap } from "../types";
+import {
+  caseStudySchema,
+  articleSchema,
+  type CaseStudyItem,
+  type ArticleItem,
+  type ContentItem,
+  type MdxCollectionId,
+} from "../types";
 
 /**
  * MDX (file system) source adapter.
  *
- * The ONLY module in the codebase that knows content lives as MDX
- * files on disk. A future CMS adapter (e.g. Contentful/Sanity) will
- * implement the same `ContentSource` interface and be swapped in
- * `lib/content/index.ts` — routes and components stay untouched.
+ * The ONLY module that knows content lives as MDX files on disk.
+ * A future CMS adapter implements the same interface and is swapped
+ * in the getter modules — routes and components stay untouched.
  */
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
-export interface ContentSource {
-  list<C extends CollectionId>(
-    collection: C,
-  ): Promise<ContentItem<CollectionMetaMap[C]>[]>;
-  get<C extends CollectionId>(
-    collection: C,
-    slug: string,
-  ): Promise<ContentItem<CollectionMetaMap[C]> | null>;
-}
+const collectionSchemas = {
+  work: caseStudySchema,
+  ideas: articleSchema,
+} as const;
 
-function collectionDir(collection: CollectionId): string {
+type CollectionMeta = {
+  work: CaseStudyItem["meta"];
+  ideas: ArticleItem["meta"];
+};
+
+function collectionDir(collection: MdxCollectionId): string {
   return path.join(CONTENT_DIR, collection);
 }
 
-async function loadCollection<C extends CollectionId>(
+async function loadCollection<C extends MdxCollectionId>(
   collection: C,
-): Promise<ContentItem<CollectionMetaMap[C]>[]> {
+): Promise<ContentItem<CollectionMeta[C]>[]> {
   const dir = collectionDir(collection);
   if (!fs.existsSync(dir)) return [];
 
@@ -39,11 +44,12 @@ async function loadCollection<C extends CollectionId>(
     .readdirSync(dir)
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
 
-  const items: ContentItem<CollectionMetaMap[C]>[] = [];
+  const schema = collectionSchemas[collection];
+  const items: ContentItem<CollectionMeta[C]>[] = [];
+
   for (const file of files) {
     const raw = fs.readFileSync(path.join(dir, file), "utf8");
     const { data, content } = matter(raw);
-    const schema = collectionSchemas[collection];
     const parsed = schema.safeParse({
       ...data,
       slug: data.slug ?? path.parse(file).name,
@@ -54,18 +60,24 @@ async function loadCollection<C extends CollectionId>(
       );
     }
     if (parsed.data.draft && process.env.NODE_ENV === "production") continue;
-    items.push({ meta: parsed.data as CollectionMetaMap[C], body: content });
+    items.push({ meta: parsed.data as CollectionMeta[C], body: content });
   }
 
   return items.sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
 }
 
-export const mdxContentSource: ContentSource = {
-  async list(collection) {
+export const mdxContentSource = {
+  list<C extends MdxCollectionId>(
+    collection: C,
+  ): Promise<ContentItem<CollectionMeta[C]>[]> {
     return loadCollection(collection);
   },
-  async get(collection, slug) {
-    const items = await loadCollection(collection);
-    return items.find((i) => i.meta.slug === slug) ?? null;
+  get<C extends MdxCollectionId>(
+    collection: C,
+    slug: string,
+  ): Promise<ContentItem<CollectionMeta[C]> | null> {
+    return loadCollection(collection).then(
+      (items) => items.find((i) => i.meta.slug === slug) ?? null,
+    );
   },
 };
