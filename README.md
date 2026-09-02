@@ -1,17 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Executive Platform
+
+Foundation phase of a long-term executive digital platform (Next.js 16 + React 19 + TypeScript + Tailwind CSS 4).
+
+**Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) first** — it defines the technology stack, folder structure, content architecture, component architecture, and quality gates for this project.
+
+## Commands
+
+```bash
+pnpm dev          # develop
+pnpm verify       # typecheck + lint + format:check + unit tests + production build
+pnpm test:e2e     # Playwright end-to-end tests
+```
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
