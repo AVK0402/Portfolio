@@ -38,10 +38,7 @@ export type CollectionId = (typeof collectionIds)[number];
  * Per-collection extensions. These remain intentionally minimal;
  * refine as each content type's real shape is defined.
  */
-export const collectionSchemas: Record<
-  CollectionId,
-  z.ZodType<ContentBase> // extend per-collection when shapes are defined
-> = {
+export const collectionSchemas = {
   articles: contentBaseSchema.extend({
     tags: z.array(z.string()).default([]),
   }),
@@ -52,10 +49,13 @@ export const collectionSchemas: Record<
   speaking: contentBaseSchema.extend({
     venue: z.string().optional(),
   }),
-  awards: contentBaseSchema.extend({/** Granting organization. */}),
-  media: contentBaseSchema.extend({
-    /** Podcasts, interviews, publications — external or embedded. */
-  }),
+  awards: contentBaseSchema.extend({}),
+  media: contentBaseSchema.extend({}),
+} satisfies Record<CollectionId, z.ZodType<ContentBase>>;
+
+export type CollectionSchemas = typeof collectionSchemas;
+export type CollectionMetaMap = {
+  [C in keyof CollectionSchemas]: z.infer<CollectionSchemas[C]>;
 };
 
 /** A content item as consumed by the UI. Body is opaque (rendered by MDX/CMS renderer). */

@@ -5,6 +5,33 @@ platform. Visual design, copy and case-study content are deliberately NOT
 defined here. This document records the architecture decisions so the
 experience can evolve for 5–10 years without a rewrite.
 
+## Engineering Principles
+
+These rules are binding for all contributions:
+
+1. **Server Components by default.** `"use client"` only where interactivity
+   requires it (currently: `motion-provider.tsx`, `lib/analytics/providers/*`).
+   Keep the client boundary at the leaves of the tree.
+2. **Content ≠ presentation.** Components receive content as props; routes
+   fetch via `lib/content` and compose. No page should own presentation logic
+   or data access simultaneously.
+3. **Data models ≠ UI.** Content/validation shapes live in `lib/content/types.ts`,
+   not in components. Components type their props explicitly and never import
+   schemas to render.
+4. **Composition over inheritance, no clever architecture.** Plain functions,
+   explicit props, small modules. If a pattern needs a paragraph of explanation
+   beyond its doc comment, it is too complex.
+5. **Strict TypeScript everywhere** (`noUncheckedIndexedAccess` on). No `any`;
+   the one deliberate cast (`parsed.data` in the MDX adapter) is documented.
+6. **Accessibility first-class:** semantic HTML, one `h1` per page, `lang` from
+   config, focus-visible styles, `reducedMotion` respected, landmarks (`main`,
+   `nav`) used by the layout shell.
+7. **Performance first-class:** animation code is code-split behind LazyMotion,
+   all imagery via `next/image`, no client-side data fetching for content,
+   dependency additions require justification.
+8. **SEO first-class:** every route uses `buildMetadata()`, sitemap/robots are
+   generated from the content layer, JSON-LD via `lib/seo`.
+
 ## Technology Stack (current stable versions at setup time)
 
 | Concern      | Choice                                       |

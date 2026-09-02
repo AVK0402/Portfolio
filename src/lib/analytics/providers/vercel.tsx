@@ -1,10 +1,13 @@
+"use client";
+
+import { useEffect } from "react";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import type { AnalyticsProvider } from "../index";
 import { setAnalyticsProvider } from "../index";
 
 /**
  * Vercel Web Analytics adapter (cookie-less, privacy-conscious).
- * Registered as the active provider when the site config selects it.
+ * The only client component in the analytics layer.
  */
 
 const vercelProvider: AnalyticsProvider = {
@@ -22,7 +25,10 @@ const vercelProvider: AnalyticsProvider = {
   },
 };
 
+/** Render-side registration happens in an effect — never during render. */
 export function VercelAdapter() {
-  setAnalyticsProvider(vercelProvider);
+  useEffect(() => {
+    setAnalyticsProvider(vercelProvider);
+  }, []);
   return <VercelAnalytics />;
 }

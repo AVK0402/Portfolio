@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { collectionSchemas, type CollectionId, type ContentItem } from "../types";
+import type { CollectionMetaMap } from "../types";
 
 /**
  * MDX (file system) source adapter.
@@ -15,15 +16,22 @@ import { collectionSchemas, type CollectionId, type ContentItem } from "../types
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
 export interface ContentSource {
-  list(collection: CollectionId): Promise<ContentItem[]>;
-  get(collection: CollectionId, slug: string): Promise<ContentItem | null>;
+  list<C extends CollectionId>(
+    collection: C,
+  ): Promise<ContentItem<CollectionMetaMap[C]>[]>;
+  get<C extends CollectionId>(
+    collection: C,
+    slug: string,
+  ): Promise<ContentItem<CollectionMetaMap[C]> | null>;
 }
 
 function collectionDir(collection: CollectionId): string {
   return path.join(CONTENT_DIR, collection);
 }
 
-async function loadCollection(collection: CollectionId): Promise<ContentItem[]> {
+async function loadCollection<C extends CollectionId>(
+  collection: C,
+): Promise<ContentItem<CollectionMetaMap[C]>[]> {
   const dir = collectionDir(collection);
   if (!fs.existsSync(dir)) return [];
 
@@ -31,7 +39,7 @@ async function loadCollection(collection: CollectionId): Promise<ContentItem[]> 
     .readdirSync(dir)
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
 
-  const items: ContentItem[] = [];
+  const items: ContentItem<CollectionMetaMap[C]>[] = [];
   for (const file of files) {
     const raw = fs.readFileSync(path.join(dir, file), "utf8");
     const { data, content } = matter(raw);
@@ -46,7 +54,7 @@ async function loadCollection(collection: CollectionId): Promise<ContentItem[]> 
       );
     }
     if (parsed.data.draft && process.env.NODE_ENV === "production") continue;
-    items.push({ meta: parsed.data, body: content });
+    items.push({ meta: parsed.data as CollectionMetaMap[C], body: content });
   }
 
   return items.sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));

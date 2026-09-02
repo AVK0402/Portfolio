@@ -1,5 +1,5 @@
 import { mdxContentSource, type ContentSource } from "./sources/mdx";
-import type { CollectionId, ContentBase, ContentItem } from "./types";
+import type { CollectionId, CollectionMetaMap, ContentItem } from "./types";
 
 /**
  * Content facade — the ONLY import surface for routes/components.
@@ -18,15 +18,20 @@ export function setContentSource(next: ContentSource): void {
 
 export async function getCollection<C extends CollectionId>(
   collection: C,
-): Promise<ContentItem<ContentBase>[]> {
-  return source.list(collection) as Promise<ContentItem<ContentBase>[]>;
+): Promise<ContentItem<CollectionMetaMap[C]>[]> {
+  return source.list(collection);
 }
 
 export async function getContentBySlug<C extends CollectionId>(
   collection: C,
   slug: string,
-): Promise<ContentItem<ContentBase> | null> {
-  return source.get(collection, slug) as Promise<ContentItem<ContentBase> | null>;
+): Promise<ContentItem<CollectionMetaMap[C]> | null> {
+  return source.get(collection, slug);
 }
 
-export type { CollectionId, ContentBase, ContentItem } from "./types";
+export type {
+  CollectionId,
+  CollectionMetaMap,
+  ContentBase,
+  ContentItem,
+} from "./types";

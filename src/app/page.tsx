@@ -1,4 +1,5 @@
-import { Heading, Text } from "@/components/ui/container";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
 
 /**
  * Homepage placeholder — intentionally content-free.
