@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Container } from "@/components/layout/Container";
+import { Container, Section } from "@/components/layout/Container";
 import { getArticles, getArticle } from "@/lib/content/getArticles";
 import { ArticleHeader } from "@/components/ideas/ArticleHeader";
 import { ArticleContent } from "@/components/ideas/ArticleContent";
@@ -40,12 +40,14 @@ export default async function ArticlePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(item.meta)) }}
       />
-      <Container className="py-16">
-        <ArticleHeader article={item.meta} />
-        <div className="mt-10">
-          <ArticleContent body={item.body} />
-        </div>
-      </Container>
+      <Section>
+        <Container>
+          <ArticleHeader article={item.meta} />
+          <div className="mt-10">
+            <ArticleContent body={item.body} />
+          </div>
+        </Container>
+      </Section>
     </main>
   );
 }

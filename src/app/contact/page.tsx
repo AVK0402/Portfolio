@@ -1,5 +1,5 @@
 import { buildMetadata } from "@/lib/seo/metadata";
-import { Container } from "@/components/layout/Container";
+import { Container, Section } from "@/components/layout/Container";
 
 export const metadata = buildMetadata({ title: "Contact" });
 
@@ -7,9 +7,11 @@ export const metadata = buildMetadata({ title: "Contact" });
 export default function ContactPage() {
   return (
     <main id="main-content">
-      <Container className="py-16">
-        <h1 className="text-4xl font-semibold tracking-tight">Contact</h1>
-      </Container>
+      <Section>
+        <Container>
+          <h1 className="text-4xl font-semibold tracking-tight">Contact</h1>
+        </Container>
+      </Section>
     </main>
   );
 }

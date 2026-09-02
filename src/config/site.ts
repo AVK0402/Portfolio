@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 /**
  * Single source of truth for site-wide identity and configuration.
  * UI components must read from here — never hardcode identity values.
@@ -25,11 +23,3 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
-
-/** Convenience schema for navigation items (see data/navigation.ts). */
-export const navigationSchema = z.object({
-  label: z.string().min(1),
-  href: z.string().min(1),
-});
-
-export type NavigationItem = z.infer<typeof navigationSchema>;

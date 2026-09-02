@@ -28,10 +28,7 @@ export const articleSchema = baseSchema.extend({
   tags: z.array(z.string()).default([]),
 });
 
-/** MDX collection ids — the stable vocabulary of the file-based content. */
-export const mdxCollections = ["work", "ideas"] as const;
-
-export type MdxCollectionId = (typeof mdxCollections)[number];
+export type MdxCollectionId = "work" | "ideas";
 
 export interface ContentItem<TMeta> {
   meta: TMeta;

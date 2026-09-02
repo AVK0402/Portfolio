@@ -13,10 +13,10 @@ export function CaseStudySection({
   children: React.ReactNode;
 }) {
   return (
-    <section aria-labelledby={undefined}>
-      <Divider className="my-10" />
+    <section>
+      <Divider className="my-(--space-xl)" />
       <SectionHeading>{title}</SectionHeading>
-      <div className="mt-4 leading-relaxed">{children}</div>
+      <div className="mt-(--space-sm) leading-relaxed">{children}</div>
     </section>
   );
 }

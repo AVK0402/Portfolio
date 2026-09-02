@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Container } from "@/components/layout/Container";
+import { Container, Section } from "@/components/layout/Container";
 import { getCaseStudies } from "@/lib/content/getCaseStudies";
 import { getCaseStudy } from "@/lib/content/getCaseStudies";
 import { CaseStudyHero } from "@/components/work/CaseStudyHero";
@@ -36,13 +36,15 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <main id="main-content">
-      <Container className="py-16">
-        <CaseStudyHero caseStudy={item.meta} />
-        <div className="mt-10">
-          <ImpactMetrics metrics={item.meta.metrics} />
-        </div>
-        {/* Case study body sections render here in the content phase. */}
-      </Container>
+      <Section>
+        <Container>
+          <CaseStudyHero caseStudy={item.meta} />
+          <div className="mt-10">
+            <ImpactMetrics metrics={item.meta.metrics} />
+          </div>
+          {/* Case study body sections render here in the content phase. */}
+        </Container>
+      </Section>
     </main>
   );
 }

@@ -73,6 +73,36 @@ These rules are binding for all contributions:
 6. **Identity has one source.** `src/config/site.ts` holds name, URL, author,
    navigation. Never hardcode identity in components.
 
+## Code Quality Conventions
+
+1. **TypeScript strict** (`strict`, `noUncheckedIndexedAccess`); ESLint
+   (`next/core-web-vitals` + typescript + client-boundary restrictions) and
+   Prettier gate every commit via `pnpm verify`. Zero warnings allowed.
+2. **Naming**: components/hooks — `PascalCase` files matching the export;
+   modules/lib — `camelCase` (`getCaseStudies.ts`, `cn.ts`); types — domain
+   nouns in `src/types` (`CaseStudy`, `Article`); content files — kebab-case
+   slugs matching their URL.
+3. **Imports**: path aliases only — `@/*` (src), `@content/*`, `@mdx-components`.
+   No relative chains beyond one level (`../types` is fine; `../../..` is not).
+   UI imports content exclusively through `lib/content` getters and animation
+   exclusively through `components/motion`.
+4. **No dead code**: unused exports are removed, not commented out. ESLint
+   flags unused locals; unused _exports_ are caught in review — keep the
+   export surface minimal (barrels state their intent).
+5. **No duplication**: constants live once — content dir in
+   `config/constants.ts`, routes in `config/navigation.ts`, identity in
+   `config/site.ts`, design values in `globals.css`, motion values in
+   `motion/tokens.ts` (mirroring CSS). Copy lives in `content/` or `data/`,
+   never inline in components.
+6. **No magic values**: every visual value is a token
+   (`p-(--space-md)`, `max-w-(--container-lg)`, `duration-(--motion-fast)`).
+   If a token doesn't exist, add it to `globals.css` first — never inline a
+   raw number in a component.
+7. **Component size budget**: components stay under ~100 lines and have one
+   clear responsibility (route → composes sections; section → composes
+   primitives; primitive → one job). A component approaching 300 lines is a
+   refactoring signal, not a pattern.
+
 ## Testing Strategy
 
 Pragmatic and behavior-focused. No test exists purely to raise counts.

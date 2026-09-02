@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { CONTENT_DIR } from "@/config/constants";
 import {
   caseStudySchema,
   articleSchema,
@@ -16,9 +17,13 @@ import {
  * The ONLY module that knows content lives as MDX files on disk.
  * A future CMS adapter implements the same interface and is swapped
  * in the getter modules — routes and components stay untouched.
+ *
+ * Note: the dynamic fs reads below produce a benign Turbopack build
+ * warning ("tracing of the whole project"). Content is read strictly
+ * at build time for SSG; nothing touches the filesystem at runtime.
  */
 
-const CONTENT_DIR = path.join(process.cwd(), "content");
+const CONTENT_ROOT = path.join(process.cwd(), CONTENT_DIR);
 
 const collectionSchemas = {
   work: caseStudySchema,
@@ -31,7 +36,7 @@ type CollectionMeta = {
 };
 
 function collectionDir(collection: MdxCollectionId): string {
-  return path.join(CONTENT_DIR, collection);
+  return path.join(CONTENT_ROOT, collection);
 }
 
 async function loadCollection<C extends MdxCollectionId>(

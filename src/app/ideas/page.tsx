@@ -1,5 +1,5 @@
 import { buildMetadata } from "@/lib/seo/metadata";
-import { Container } from "@/components/layout/Container";
+import { Container, Section } from "@/components/layout/Container";
 import { getArticles } from "@/lib/content/getArticles";
 import { ArticleCard } from "@/components/ideas/ArticleCard";
 
@@ -10,14 +10,16 @@ export default async function IdeasPage() {
   const articles = await getArticles();
   return (
     <main id="main-content">
-      <Container className="py-16">
-        <h1 className="text-4xl font-semibold tracking-tight">Ideas</h1>
-        <div className="mt-10 flex flex-col gap-10">
-          {articles.map(({ meta }) => (
-            <ArticleCard key={meta.slug} article={meta} />
-          ))}
-        </div>
-      </Container>
+      <Section>
+        <Container>
+          <h1 className="text-4xl font-semibold tracking-tight">Ideas</h1>
+          <div className="mt-10 flex flex-col gap-10">
+            {articles.map(({ meta }) => (
+              <ArticleCard key={meta.slug} article={meta} />
+            ))}
+          </div>
+        </Container>
+      </Section>
     </main>
   );
 }
