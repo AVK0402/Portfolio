@@ -1,4 +1,4 @@
-# Executive Platform
+# Portfolio
 
 Foundation phase of a long-term executive digital platform (Next.js 16 + React 19 + TypeScript + Tailwind CSS 4).
 
