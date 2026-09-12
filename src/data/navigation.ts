@@ -3,12 +3,10 @@
  * this file maps them to labels. A route appears here only after its
  * page exists.
  */
+import { routes } from "@/config/navigation";
+
 export const primaryNavigation: { label: string; href: string }[] = [
-  { label: "About", href: "/about" },
-  { label: "Work", href: "/work" },
-  { label: "Values", href: "/values" },
-  { label: "Speaking", href: "/speaking" },
-  { label: "Ideas", href: "/ideas" },
-  { label: "Resume", href: "/resume" },
-  { label: "Contact", href: "/contact" },
+  { label: "Work", href: routes.work },
+  { label: "Thinking", href: routes.ideas },
+  { label: "About", href: routes.about },
 ];

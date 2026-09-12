@@ -4,15 +4,17 @@
  * Later, values here can be sourced from a headless CMS without
  * changing any consuming component (they read from this module only).
  */
+const name = "Anish Velayudhan Kutty";
+
 export const siteConfig = {
-  name: "Executive Platform",
+  name,
   /** TODO: replace with production values before launch. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en",
   /** Used for JSON-LD, metadata templates, and future CMS mapping. */
   author: {
-    name: "Full Name",
-    role: "VP Design / Chief Design Officer",
+    name,
+    role: "Design & Product Transformation Leader",
     // email, socials, etc. — extend as identity content is defined.
   },
   analytics: {

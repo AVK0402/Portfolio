@@ -1,56 +1,27 @@
-import { getCaseStudies } from "@/lib/content/getCaseStudies";
-import { getArticles } from "@/lib/content/getArticles";
-import { CaseStudyCard } from "@/components/work/CaseStudyCard";
-import { ArticleCard } from "@/components/ideas/ArticleCard";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Container, Section } from "@/components/layout/Container";
+import { getHome } from "@/lib/content/getHome";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { siteConfig } from "@/config/site";
+import { HomeHero } from "@/components/blocks/HomeHero";
+import { HomePerspective } from "@/components/blocks/HomePerspective";
+import { HomeCredibility } from "@/components/blocks/HomeCredibility";
+import { HomeCapabilities } from "@/components/blocks/HomeCapabilities";
+import { FeaturedWork } from "@/components/work/FeaturedWork";
 
-/**
- * Homepage placeholder — intentionally content-free; composed of
- * future sections in src/components/sections/. Data flows in via the
- * content layer, presentation via components.
- *
- * Responsive composition example: content stacks on mobile (single
- * column) and gains intentional multi-column arrangement at md/lg —
- * composition, not scaling.
- */
-export default async function Home() {
-  const [caseStudies, articles] = await Promise.all([getCaseStudies(), getArticles()]);
+export const metadata = buildMetadata({
+  title: siteConfig.name,
+  description: getHome().hero.description,
+});
+metadata.title = { absolute: siteConfig.name };
 
+export default function Home() {
+  const content = getHome();
   return (
-    <main id="main-content">
-      <Section className="flex flex-1 items-center">
-        <Container className="text-center">
-          <h1 className="text-4xl font-semibold tracking-tight">
-            Architecture foundation ready.
-          </h1>
-          <p className="text-muted-foreground mt-(--space-md) leading-relaxed">
-            Content, design and experience phases follow. See docs/ARCHITECTURE.md.
-          </p>
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <SectionHeading>Work</SectionHeading>
-          <div className="mt-(--space-lg) gap-(--space-xl) md:grid md:grid-cols-2 lg:grid-cols-3">
-            {caseStudies.map(({ meta }) => (
-              <CaseStudyCard key={meta.slug} caseStudy={meta} />
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <SectionHeading>Ideas</SectionHeading>
-          <div className="mt-(--space-lg) gap-(--space-xl) md:grid md:grid-cols-2">
-            {articles.map(({ meta }) => (
-              <ArticleCard key={meta.slug} article={meta} />
-            ))}
-          </div>
-        </Container>
-      </Section>
+    <main id="main-content" className="portfolio-home">
+      <HomeHero content={content.hero} />
+      <HomePerspective content={content.pointOfView} />
+      <HomeCredibility content={content.credibility} />
+      <HomeCapabilities content={content.capabilities} />
+      <FeaturedWork content={content.featured} />
     </main>
   );
 }

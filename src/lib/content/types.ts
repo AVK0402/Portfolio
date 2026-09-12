@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { Article } from "@/types/article";
 import type { CaseStudy } from "@/types/work";
+import type { MdxCollectionId, CollectionMeta } from "./registry";
 
 /**
  * Zod contracts for MDX frontmatter, validated at load time
@@ -28,7 +29,7 @@ export const articleSchema = baseSchema.extend({
   tags: z.array(z.string()).default([]),
 });
 
-export type MdxCollectionId = "work" | "ideas";
+export type { MdxCollectionId, CollectionMeta } from "./registry";
 
 export interface ContentItem<TMeta> {
   meta: TMeta;
@@ -38,3 +39,20 @@ export interface ContentItem<TMeta> {
 
 export type CaseStudyItem = ContentItem<CaseStudy>;
 export type ArticleItem = ContentItem<Article>;
+
+/**
+ * Content source contract. Any backing store — MDX files on disk today,
+ * a headless CMS later — implements this interface. The active source
+ * is selected in `lib/content/index.ts` (the content repository /
+ * delegation point), so migrating storage never changes pages,
+ * components, the design system, routing or SEO.
+ */
+export interface ContentSource {
+  list<C extends MdxCollectionId>(
+    collection: C,
+  ): Promise<ContentItem<CollectionMeta[C]>[]>;
+  get<C extends MdxCollectionId>(
+    collection: C,
+    slug: string,
+  ): Promise<ContentItem<CollectionMeta[C]> | null>;
+}

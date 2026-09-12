@@ -7,7 +7,7 @@ import AxeBuilder from "@axe-core/playwright";
  */
 test("home page renders with correct document structure", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/Executive Platform/);
+  await expect(page).toHaveTitle(/Anish Velayudhan Kutty/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.locator("h1")).toBeVisible();
   await expect(page.locator("main")).toBeVisible();

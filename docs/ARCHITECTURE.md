@@ -288,8 +288,10 @@ src/
     analytics/                  # Provider mount point (added for analytics abstraction)
   config/                       # site.ts (identity + routes), navigation.ts, constants.ts
   content/                      # Getter modules — the ONLY import surface for the UI
+    index.ts                    # Content repository — selects the active ContentSource
+    registry.ts                 # Collection registry — single additive extension point
     getCaseStudies.ts  getArticles.ts  getSpeaking.ts  getValues.ts
-    types.ts                    # Zod frontmatter contracts (not imported by UI)
+    types.ts                    # Zod contracts + ContentSource interface (not imported by UI)
     sources/mdx.ts              # FS adapter (only module that knows content = files)
   data/                         # Static structured data: profile, experience, awards, navigation
   lib/
@@ -313,6 +315,39 @@ mdx-components.tsx              # MDX→design-system component mapping
   structured content (engagements, values, profile, experience, awards) lives
   as typed modules — no parser needed, type-checked at compile time.
 - UI components import getters only — never `fs`, MDX, or data modules.
+
+## Extensibility (adding features without restructuring)
+
+The content layer is feature-agnostic: every planned feature maps onto one of
+three additive patterns, none of which touches core files (`ContentSource`,
+`contentRepository`, getters, types, pages, routing, SEO, design system).
+
+**1. Rich-content collections (articles, case studies, podcasts, interviews,
+AI experiments, publications, newsletter archive, media appearances, courses,
+teaching resources, …).** These have an MDX body and per-item routes. Adding one
+is exactly two additive steps:
+
+1. Add frontmatter-validated files under `content/<id>/*.mdx`.
+2. Register the id + its frontmatter schema in `src/lib/content/registry.ts`.
+
+`MdxCollectionId` and `CollectionMeta` derive from the registry, so the
+`ContentSource`, the repository and the existing getter pattern pick up the new
+collection automatically. Then add a thin getter (e.g. `getPodcasts()`) and a
+thin index/detail route — both are additive, mirroring `ideas/[slug]`.
+
+**2. Structured list data (speaking, awards, values, teaching, advisory,
+courses-as-metadata, …).** Pure lists without a body are typed TS modules in
+`content/` or `data/` plus a getter (mirror `getValues`/`getSpeaking`). Additive
+only — no core change.
+
+**3. Non-collection features (downloadable executive bio, contact / speaking
+request form, newsletter signup).** Assets (bio PDF) are served from
+`public/documents/` and linked from any route. Forms are thin routes composed
+from existing UI primitives (`TextField`, `Button`). Neither touches the content
+layer; both are additive.
+
+Rule: adding a feature = adding content (or an asset) + one registry entry
+and/or one getter + one thin route. No core module changes, no restructuring.
 
 ## Quality Gates
 

@@ -2,21 +2,18 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { CONTENT_DIR } from "@/config/constants";
-import {
-  caseStudySchema,
-  articleSchema,
-  type CaseStudyItem,
-  type ArticleItem,
-  type ContentItem,
-  type MdxCollectionId,
-} from "../types";
+import { mdxCollections } from "../registry";
+import type { MdxCollectionId } from "../registry";
+import type { CollectionMeta, ContentItem, ContentSource } from "../types";
 
 /**
  * MDX (file system) source adapter.
  *
- * The ONLY module that knows content lives as MDX files on disk.
- * A future CMS adapter implements the same interface and is swapped
- * in the getter modules — routes and components stay untouched.
+ * A concrete `ContentSource` implementation driven by the collection
+ * registry — the only module that knows content lives as MDX files on
+ * disk. A future CMS adapter implements the same `ContentSource`
+ * interface and is swapped in `lib/content/index.ts`; routes and
+ * components stay untouched.
  *
  * Note: the dynamic fs reads below produce a benign Turbopack build
  * warning ("tracing of the whole project"). Content is read strictly
@@ -24,16 +21,6 @@ import {
  */
 
 const CONTENT_ROOT = path.join(process.cwd(), CONTENT_DIR);
-
-const collectionSchemas = {
-  work: caseStudySchema,
-  ideas: articleSchema,
-} as const;
-
-type CollectionMeta = {
-  work: CaseStudyItem["meta"];
-  ideas: ArticleItem["meta"];
-};
 
 function collectionDir(collection: MdxCollectionId): string {
   return path.join(CONTENT_ROOT, collection);
@@ -49,7 +36,7 @@ async function loadCollection<C extends MdxCollectionId>(
     .readdirSync(dir)
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
 
-  const schema = collectionSchemas[collection];
+  const schema = mdxCollections[collection];
   const items: ContentItem<CollectionMeta[C]>[] = [];
 
   for (const file of files) {
@@ -71,7 +58,7 @@ async function loadCollection<C extends MdxCollectionId>(
   return items.sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
 }
 
-export const mdxContentSource = {
+export const mdxContentSource: ContentSource = {
   list<C extends MdxCollectionId>(
     collection: C,
   ): Promise<ContentItem<CollectionMeta[C]>[]> {

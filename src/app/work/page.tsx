@@ -1,25 +1,30 @@
 import { buildMetadata } from "@/lib/seo/metadata";
-import { Container, Section } from "@/components/layout/Container";
-import { getCaseStudies } from "@/lib/content/getCaseStudies";
-import { CaseStudyCard } from "@/components/work/CaseStudyCard";
+import { Container } from "@/components/layout/Container";
+import { getProductize } from "@/lib/content/getProductize";
+import { ProductizeStory } from "@/components/work/ProductizeStory";
+import { WorkQuickLinks } from "@/components/work/WorkQuickLinks";
 
-export const metadata = buildMetadata({ title: "Work" });
+export const metadata = buildMetadata({
+  title: "Work",
+  path: "work",
+  description: getProductize().hero.description,
+});
 
-/** Work index — lists published case studies via the content layer. */
-export default async function WorkPage() {
-  const caseStudies = await getCaseStudies();
+/** Continuous Productize story. Existing /work/[slug] routes remain available. */
+export default function WorkPage() {
+  const content = getProductize();
   return (
-    <main id="main-content">
-      <Section>
-        <Container>
-          <h1 className="text-4xl font-semibold tracking-tight">Work</h1>
-          <div className="mt-10 flex flex-col gap-10">
-            {caseStudies.map(({ meta }) => (
-              <CaseStudyCard key={meta.slug} caseStudy={meta} />
-            ))}
-          </div>
-        </Container>
-      </Section>
+    <main id="main-content" className="portfolio-work">
+      <Container className="work-layout">
+        <div className="work-sticky-header">
+          <header className="work-case-header">
+            <p className="work-case-eyebrow">{content.header.eyebrow}</p>
+            <p className="work-case-title">{content.header.title}</p>
+          </header>
+          <WorkQuickLinks items={content.quickLinks} activeId={content.id} />
+        </div>
+        <ProductizeStory content={content} />
+      </Container>
     </main>
   );
 }

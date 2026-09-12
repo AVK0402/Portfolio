@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/Link";
 import { primaryNavigation } from "@/data/navigation";
 
 /**
@@ -8,7 +8,7 @@ import { primaryNavigation } from "@/data/navigation";
 export function Navigation() {
   return (
     <nav aria-label="Primary">
-      <ul className="flex items-center gap-6">
+      <ul className="site-navigation">
         {primaryNavigation.map((item) => (
           <li key={item.href}>
             <Link href={item.href}>{item.label}</Link>

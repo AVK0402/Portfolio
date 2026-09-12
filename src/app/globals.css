@@ -1,4 +1,65 @@
 @import "tailwindcss";
+@import "./home.css";
+@import "./work.css";
+
+/* Measured homepage brand tokens from Figma 146:3. Existing route tokens remain. */
+@theme {
+  --color-brand-primary: #00184c;
+  --color-brand-accent: #a326d5;
+  --color-brand-surface: #eff3f9;
+  --color-brand-paper: #ffffff;
+  --color-brand-text: #61676b;
+  --color-brand-label: #000000;
+  --color-brand-number: #bdbdbd;
+  --color-brand-border: #dbdbdb;
+  --color-brand-cyan: #a1e3ff;
+  --color-brand-coral: #ff7373;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --text-caption: 0.6875rem;
+  --text-hero: 4.6875rem;
+  --text-section: 3.4375rem;
+  --text-case: 2.5rem;
+  --leading-hero: 5.6875rem;
+  --leading-section: 4.1875rem;
+  --leading-case: 4.0625rem;
+  --leading-intro: 2.5rem;
+  --leading-eyebrow: 1.8125rem;
+  --leading-body: 1.25rem;
+  --leading-label: 1.0625rem;
+  --tracking-brand: 0em;
+  --container-portfolio: 70.9375rem;
+  --container-header: 75.75rem;
+  --radius-cta: 0.375rem;
+  --space-heading: 0.75rem;
+  --space-columns: 2.75rem;
+  --space-closing: 4.6875rem;
+  --space-section: 3.5625rem;
+  --space-diagram: 4.5rem;
+  --space-diagram-after: 3.75rem;
+  --size-cta-height: 3.125rem;
+  --size-cta-primary: 10.25rem;
+  --size-cta-secondary: 12rem;
+  --size-section-mark: 1.875rem;
+  --size-section-mark-height: 0.375rem;
+  /* Work frame 163:319: compact shell, reading column and sidebar. */
+  --size-work-header: 4.5rem;
+  --size-work-case-header: 7.4375rem;
+  --space-work-header-story: 2.8125rem;
+  --text-work-case-title: 1.75rem;
+  --space-work-sticky: calc(
+    var(--size-work-header) + var(--size-work-case-header) +
+      var(--space-work-header-story)
+  );
+  --container-work: 62.9375rem;
+  --space-work-sidebar: 1.9375rem;
+  --text-work-fact: 1.375rem;
+  --leading-work-fact: 1.65625rem;
+  --space-work-chapter: 9.6875rem;
+}
 
 /*
  * Design-system foundations — Tailwind v4 CSS-first token layer.
@@ -108,6 +169,7 @@
   /* -------------------------------------------------------------------------
    * Motion — easings
    * ------------------------------------------------------------------------- */
+  --motion-hero-reveal: 8s;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* default UI easing */
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1); /* elements entering */
   --ease-exit: cubic-bezier(0.7, 0, 0.84, 0); /* elements leaving */
