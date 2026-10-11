@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Hanken_Grotesk, Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { MotionProvider } from "@/components/motion";
 import { Analytics } from "@/components/analytics/analytics";
@@ -24,6 +24,12 @@ const inter = Inter({
   display: "swap",
 });
 
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -37,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={siteConfig.locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${hankenGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <MotionProvider>

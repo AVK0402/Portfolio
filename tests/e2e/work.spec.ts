@@ -61,7 +61,7 @@ test("Productize anchor respects reduced motion and does not leak Work styling t
     .click();
   await expect(page).toHaveURL(/\/$/);
   await expect(
-    page.getByText("Design & Product Transformation Leader", { exact: true }),
+    page.getByText("Design & Product Executive", { exact: true }),
   ).toBeVisible();
 });
 

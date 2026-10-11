@@ -1,5 +1,16 @@
 # Components
 
+## Leadership homepage update — 2026-10-12
+
+- `LeadershipHome`: server-rendered homepage composition and semantic narrative.
+- `LeadershipMotion`: isolated client canvas, intro, reveal, and scrub behavior.
+- Local reusable homepage patterns inside `LeadershipHome`: `HomeHeader`,
+  `SectionHeader`, `MetricBand`, `InsightCards`, `CinematicSection`,
+  `SynthesisGraphic`, and `FlowPanel`.
+
+These replace the previous homepage-only block set. Shared layout/UI components and
+all Work components remain unchanged.
+
 ## Work implementation update — 2026-09-11
 
 `WorkQuickLinks` is an isolated server-rendered navigation component. It accepts labels, optional target IDs, and the active chapter ID; unavailable chapters render noninteractive disabled text, not broken links. `ProductizeStory` composes shared SectionIntro and local repeated facts, comparison-table and callout patterns. `EngineerDiagram` uses exact SVG connector exports plus accessible text; `BlueprintDiagram` uses semantic content and the original arrow export. All are Server Components. Existing case-study primitives and URLs are retained.

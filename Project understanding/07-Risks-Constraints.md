@@ -1,5 +1,16 @@
 # Risks and Constraints
 
+## Leadership homepage update — 2026-10-12
+
+- The approved reference contains only a portrait/work-image placeholder. The homepage
+  preserves a neutral reserved media surface; a real approved asset is still required.
+- The homepage is intentionally long (about 20,000px at tested desktop/mobile sizes)
+  because it retains all five full-viewport narrative chapters.
+- The canvas is bounded and visibility-aware, but remains the homepage's principal
+  runtime performance area to monitor on low-power devices.
+- Homepage header styling and motion are route-scoped. Do not move their selectors or
+  client logic into the shared shell without checking every existing route.
+
 ## Work implementation update — 2026-09-11
 
 Only Productize content was supplied. Per user clarification, this is one continuous story; Transform, Intent and What’s Next are visible but inactive, without invented targets or empty sections. The product screenshot's pagination dots are static Figma artwork, not a working carousel. Existing case-study URLs remain, although `/work` now presents the story instead of the previous list.

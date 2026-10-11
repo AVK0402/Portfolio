@@ -1,5 +1,18 @@
 # Design System
 
+## Leadership homepage update — 2026-10-12
+
+The homepage has a scoped editorial system based on the approved v3 reference:
+Hanken Grotesk, near-black text, accessible gray copy, white and soft-gray surfaces,
+20px panels, a 1080px reading shell, large balanced display type, and fluid section
+spacing. Five full-viewport black chapters remain unchanged in structure and copy.
+
+Non-black content now uses reusable bordered metric bands, comparison panels,
+contained insight cards, pill-like observation labels, and structured flow panels.
+Cards are flat and precise—subtle borders, no decorative shadow or color—following
+the restrained Apple/Tesla communication direction. The system is scoped under
+`.leadership-home`; existing Home/Work brand tokens used by other routes are intact.
+
 ## Work case-study header — 2026-09-12
 
 Figma 13:259 uses existing Inter, brand navy, secondary text, paper background, and

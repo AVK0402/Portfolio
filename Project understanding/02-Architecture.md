@@ -1,5 +1,16 @@
 # Architecture
 
+## Leadership homepage update — 2026-10-12
+
+`/` is now the approved long-form leadership portfolio: proof, Productize narrative,
+five cinematic black chapters, impact, validation, and business shift. `page.tsx`
+remains a thin Server Component and composes typed `content/home.ts` through
+`getHome()` into `LeadershipHome`. Only `LeadershipMotion` is a Client Component.
+
+The homepage owns a route-local sticky header and footer. The shared shell is hidden
+only while `.leadership-home` is present, so `/work` and every other route preserve
+their existing header, footer, rendering, content, and behavior. No route changed.
+
 ## Work implementation update — 2026-09-11
 
 Work is now the continuous Productize story from Figma `163:319`, replacing the old `/work` list. `content/work/productize.ts` → `getProductize()` → `ProductizeStory` follows the existing typed file-backed content pattern. All `/work/[slug]` routes and MDX content remain unchanged. Main navigation and the homepage case CTA already point to `/work`. No new client boundary or dependency was needed.

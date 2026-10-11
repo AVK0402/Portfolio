@@ -1,5 +1,18 @@
 # Animations and Interactions
 
+## Leadership homepage update — 2026-10-12
+
+The hero reproduces the approved neural animation: particles converge from two fields
+into the actual headline, then transition to an interactive 70-node desktop or 34-node
+mobile ambient network. Canvas DPR is capped at 2 and animation pauses when the hero
+leaves the viewport. Wheel, touch, keyboard, and non-link pointer input can skip the
+intro; link activation is deliberately excluded so navigation is never interrupted.
+
+White/gray content groups reveal once with an 800ms entrance. Black-section emphasis
+text scrubs from accessible dark gray to off-white as it enters the reading zone.
+Reduced-motion users receive visible content, a static network, no reveals, no text
+scrub, and native non-smooth navigation.
+
 ## Continuous branch growth — 2026-09-12
 
 Both arms now continue along a shared stem as two complete paths, each on the same

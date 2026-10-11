@@ -1,5 +1,14 @@
 # Folder Structure
 
+## Leadership homepage update — 2026-10-12
+
+Added `src/components/blocks/LeadershipHome.tsx` and
+`src/components/blocks/LeadershipMotion.tsx`. Replaced the homepage data in
+`content/home.ts` and the composition in `src/app/page.tsx`; extended
+`src/app/home.css`. The superseded homepage-only components (`HomeHero`,
+`HomePerspective`, `HomeCredibility`, `HomeCapabilities`, `HeroBranches`,
+`FeaturedWork`, and `SystemDiagram`) were removed. Other route files are unchanged.
+
 ## Work implementation update — 2026-09-11
 
 Added `content/work/productize.ts`, `src/lib/content/getProductize.ts`, `src/components/work/{ProductizeStory,WorkQuickLinks,WorkDiagrams}.tsx`, `src/app/work.css`, `public/images/work/productize/`, and `tests/e2e/work.spec.ts`. `src/app/work/page.tsx` composes the new landing story. Existing folders own all additions; no route moves.

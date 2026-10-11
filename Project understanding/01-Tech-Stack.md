@@ -1,5 +1,13 @@
 # Tech Stack
 
+## Leadership homepage update — 2026-10-12
+
+The homepage now uses Hanken Grotesk through the existing `next/font/google`
+integration. The font variable is scoped to the homepage; other routes retain their
+existing typography. The neural hero and scroll effects use Canvas, Web Animations,
+IntersectionObserver, and requestAnimationFrame directly. No dependency or version
+changed.
+
 ## Homepage implementation update — 2026-09-10
 
 Inter is now loaded through the existing `next/font/google` integration for the branded homepage and shared header; Geist/Geist Mono remain for other content. No dependencies or lockfile versions changed. The copied installation was repaired with pnpm 11.16.0 and a frozen lockfile; its previous tree is recoverable at `/private/tmp/mission-dependencies.AWIKNi/node_modules`. TypeScript, lint, 13 unit tests, and a fresh production build pass. Build emits existing MDX dynamic-filesystem tracing warnings.

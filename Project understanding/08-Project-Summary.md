@@ -1,5 +1,17 @@
 # Project Summary
 
+## Leadership homepage update — 2026-10-12
+
+The approved v3 leadership portfolio now replaces only `/`. It preserves the reference
+header, neural hero, copy, and five black narrative chapters while rebuilding the
+white/gray sections as stronger metric bands, comparison panels, and premium contained
+cards. `/work` and all other routes are unchanged.
+
+No dependency was added. TypeScript, lint, 13 unit tests, all 22 Chrome E2E tests,
+WCAG 2.2 AA axe checks, responsive checks at 320/375/768/1440px, and a production
+Next.js webpack build pass. The normal Turbopack build is blocked only by the execution
+environment's child-process port restriction; webpack production output completes.
+
 ## Work implementation update — 2026-09-11
 
 Work/Productize is implemented at `/work`, reachable from main Work navigation and the homepage CTA. It is one continuous 6,339px desktop story matching Figma `163:319`, with sticky Quick Links and exact local graphic exports. Productize remains active; the three unsupplied chapters are intentionally inactive per user clarification. No dependencies or unrelated architecture changes. Build, lint, TypeScript, 13 unit tests, and all seven new Work browser tests pass. The full browser suite passes 19/20 tests; the remaining failure is the already-documented homepage number contrast. Tested widths: 320, 375, 768, 1280, 1440px. Existing MDX build-tracing warnings remain. Current production preview: `http://localhost:3004/work`.

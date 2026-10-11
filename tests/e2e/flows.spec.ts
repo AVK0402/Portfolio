@@ -24,10 +24,11 @@ test.describe("Critical flows", () => {
     }
   });
 
-  test("featured case CTA reaches the Work story", async ({ page }) => {
+  test("homepage narrative CTA reaches the Productize chapter", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "EXPLORE THE CASE" }).click();
-    await expect(page).toHaveURL(/\/work$/);
+    await page.getByRole("link", { name: "Read the work ↓" }).click();
+    await expect(page).toHaveURL(/\/#productize$/);
+    await expect(page.locator("#productize")).toBeInViewport();
   });
 
   test("Work story and existing case-study detail remain reachable", async ({
@@ -75,7 +76,10 @@ test.describe("Critical flows", () => {
 
   test("contact: reachable from the homepage CTA", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "LET’S CONNECT" }).click();
+    await page
+      .getByRole("link", { name: "Let's connect", exact: true })
+      .first()
+      .click();
     await expect(page).toHaveURL(/\/contact$/);
     await expect(
       page.getByRole("heading", { level: 1, name: "Contact" }),
