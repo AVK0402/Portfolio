@@ -5,6 +5,21 @@ platform. Visual design, copy and case-study content are deliberately NOT
 defined here. This document records the architecture decisions so the
 experience can evolve for 5–10 years without a rewrite.
 
+## Private Access Boundary
+
+`src/proxy.ts` protects every portfolio route and public content asset before delivery.
+The only public application surface is `/access` plus its login/logout Route Handlers.
+`src/lib/access` validates server-only invitation configuration, verifies scrypt hashes
+and signs short-lived sessions with HMAC-SHA256. The design is stateless and host
+neutral: it needs a Next.js Node server and environment secrets, not a database or an
+identity vendor. Full operating instructions and deployment constraints live in
+`docs/ACCESS-CONTROL.md`.
+
+The boundary fails closed when secrets are absent or invalid. Removing a grant revokes
+that invitation; changing the configured version or signing key revokes all sessions.
+Live credentials must never enter source control, and the repository must be private
+because deployment authentication cannot conceal files published through GitHub.
+
 ## Engineering Principles
 
 These rules are binding for all contributions:

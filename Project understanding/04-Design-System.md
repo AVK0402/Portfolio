@@ -1,5 +1,14 @@
 # Design System
 
+## Portable private-access engine — 2026-10-15
+
+The new `/access` screen is intentionally restrained and consistent with the final
+homepage: self-hosted Hanken Grotesk, near-black ink, white/soft-gray surfaces, a
+violet invitation accent, thin rules, one compact card and a black pill action. Its
+values are scoped to `access.module.css`, so Work and the standalone homepage systems
+remain untouched. The layout is fluid from 320px upward, keeps native focus states,
+uses a visible label and error, and removes transitions for reduced-motion users.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 The homepage now preserves the supplied light-only crisp system: Hanken Grotesk,

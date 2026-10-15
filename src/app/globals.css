@@ -220,6 +220,12 @@ body {
   font-family: var(--font-body);
 }
 
+/* The private access route owns its focused shell, like the standalone homepage. */
+body:has(.access-gate) > .site-header,
+body:has(.access-gate) > footer {
+  display: none;
+}
+
 /* ---------------------------------------------------------------------------
  * Focus — visible, consistent keyboard focus everywhere (WCAG 2.2 AA 2.4.7,
  * 2.4.11 focus-not-obscured relies on layout care; the ring is global).

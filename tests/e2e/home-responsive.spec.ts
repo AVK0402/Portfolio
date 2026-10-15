@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("homepage diagrams, chapters and digital-twin dialog are operable", async ({
   page,

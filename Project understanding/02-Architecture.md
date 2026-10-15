@@ -1,5 +1,22 @@
 # Architecture
 
+## Portable private-access engine — 2026-10-15
+
+`src/proxy.ts` is now the request boundary for the portfolio, public media, downloads,
+image optimization and sitemap. Only `/access`, the two access Route Handlers,
+`robots.txt`, the favicon and framework runtime files are public. Anonymous page
+requests redirect to `/access` with a sanitized return path; anonymous API requests
+receive 401. Invalid or absent production configuration fails closed.
+
+`src/lib/access` owns configuration validation, scrypt password verification, return
+path/cookie policy and HMAC session issue/verification. Every request re-checks the
+signed session against the current grant ID, grant window and global access version,
+so removing one grant revokes that invitation and changing the version revokes all
+sessions. `/api/access/login` independently validates the form and origin before
+setting the cookie; `/api/access/logout` clears both secure and local cookie forms.
+The existing routes, content sources and page compositions are unchanged behind this
+boundary.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 Only `/` was replaced. `content/home.ts` contains the trusted nine-section markup and

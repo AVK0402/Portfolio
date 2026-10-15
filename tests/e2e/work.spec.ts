@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("Primary navigation stays sticky without overlapping the Work header", async ({
   page,

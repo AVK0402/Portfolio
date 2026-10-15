@@ -1,5 +1,16 @@
 # Animations and Interactions
 
+## Portable private-access engine — 2026-10-15
+
+Anonymous navigation is intercepted before page or protected-asset delivery and sent
+to `/access`, preserving the intended destination. A valid password creates a signed,
+HTTP-only, SameSite=Strict session for at most 12 hours and returns the visitor to that
+destination. Invalid and expired invitations share one non-disclosing error. Sessions
+stop immediately when their grant disappears, its time window closes, the global
+version changes or the signing key rotates. The gate adds no JavaScript animation;
+only brief token-based input/button transitions are used and removed under reduced
+motion.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 The supplied interaction model is preserved: particle-built hero and closing lines,

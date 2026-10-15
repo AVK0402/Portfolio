@@ -1,5 +1,16 @@
 # Folder Structure
 
+## Portable private-access engine — 2026-10-15
+
+Added `src/proxy.ts`; `src/lib/access/{config,password,request,session}.ts`;
+`src/app/access/{page,access.module.css}`; and
+`src/app/api/access/{login,logout}/route.ts`. The host-neutral invitation generator is
+`scripts/create-access-grant.mjs`, with operator guidance in
+`docs/ACCESS-CONTROL.md`. Access logic has unit coverage in
+`tests/unit/access.test.ts`; `tests/e2e/access.spec.ts` and the shared E2E fixture cover
+the real form/cookie journey while keeping the existing route tests authenticated.
+No existing route or content folder moved.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 The replacement stays within the existing homepage files: `content/home.ts`,

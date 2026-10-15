@@ -1,5 +1,19 @@
 # Tech Stack
 
+## Portable private-access engine — 2026-10-15
+
+The portfolio now has a provider-independent server access layer using the existing
+Next.js 16 Node runtime, Route Handlers, Proxy convention and Node `crypto` (`scrypt`
+and HMAC-SHA256). No package or version changed. Invitation hashes, expiry windows and
+the session-signing key are server-only environment values; the browser receives only
+an HTTP-only signed session cookie. The deployment must run `next start` (or an
+equivalent Next.js Node server); static export cannot enforce this boundary.
+
+New server variables are `PORTFOLIO_ACCESS_GRANTS`, `PORTFOLIO_SESSION_SECRET`,
+`PORTFOLIO_ACCESS_VERSION` and `PORTFOLIO_SESSION_HOURS`. The last two are optional and
+default to `1` and 12 hours. Production access fails closed when the required values are
+missing or invalid.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 The approved crisp standalone portfolio now runs on the existing Next.js 16.3.4,

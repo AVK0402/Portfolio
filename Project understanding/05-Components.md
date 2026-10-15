@@ -1,5 +1,15 @@
 # Components
 
+## Portable private-access engine — 2026-10-15
+
+- `AccessPage` is a dynamic Server Component that reads only whether an active grant
+  exists; no password hash, grant label or signing secret reaches the client.
+- The access form uses native HTML POST, password autocomplete semantics, linked hint
+  and error copy, and no client component.
+- Login/logout remain Route Handlers rather than presentation components.
+- The existing `Header` and `Footer` are hidden only while `.access-gate` is mounted;
+  every existing page keeps its current shell and standalone-home behavior.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 - `LeadershipHome` remains the small Server Component rendering trusted local markup.

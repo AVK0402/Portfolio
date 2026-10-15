@@ -1,5 +1,20 @@
 # Project Summary
 
+## Portable private-access engine — 2026-10-15
+
+The complete existing portfolio is now protected by a built-in, host-neutral invitation
+engine. Anish can generate a separate high-entropy password with start and expiry times
+for each interview process, revoke one grant or every session, and move between Node.js
+hosts without changing the authentication design. Secrets remain server-only, sessions
+are signed and short-lived, protected assets are included, and invalid configuration
+fails closed. No dependency or existing page implementation changed.
+
+TypeScript, lint, 20 unit tests, a webpack production build and 23 Chrome browser tests
+pass. The standard Turbopack build reaches an environment-only child-process port
+restriction, so the supported webpack build was used as in prior verification. Before
+launch, make the GitHub repository private and configure real grants/secrets on the
+HTTPS GoDaddy Node deployment; no live interviewer credential is committed.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 The approved final portfolio now replaces `/` with nine responsive sections covering

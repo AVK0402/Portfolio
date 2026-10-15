@@ -1,5 +1,24 @@
 # Risks and Constraints
 
+## Portable private-access engine — 2026-10-15
+
+- The deployed gate cannot hide content in a public source repository. The GitHub
+  repository must be private before confidential sharing; this is the current launch
+  blocker.
+- The engine requires a live Next.js Node server and HTTPS. Static export or plain file
+  hosting cannot run `proxy.ts` or issue secure cookies.
+- This is controlled sharing, not DRM: an authorized reviewer can still take
+  screenshots, save content or share their password.
+- The no-database design deliberately has no cross-instance attempt ledger. Generated
+  passwords contain 144 bits of randomness and use scrypt, but infrastructure-level
+  request throttling remains advisable for denial-of-service resilience.
+- Grant changes require the host to restart/publish the application. The GoDaddy
+  reverse proxy must preserve HTTPS via the request URL or `X-Forwarded-Proto` so the
+  `Secure` `__Host-` cookie policy is applied.
+- Never commit live grants, password output or the session secret. Test credentials in
+  `tests/e2e/access-test-config.ts` are deterministic fixtures only and are not valid
+  unless a host is deliberately configured with them.
+
 ## Final crisp homepage replacement — 2026-10-15
 
 - The digital-twin dialog intentionally retains the supplied `Video to add` and AI
