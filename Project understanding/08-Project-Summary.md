@@ -1,5 +1,32 @@
 # Project Summary
 
+## Final crisp homepage replacement — 2026-10-15
+
+The approved final portfolio now replaces `/` with nine responsive sections covering
+Work, Impact, Leadership, Point of View, Future, About, the next role and Conversation.
+It preserves the supplied sticky header, condensed editorial layout, real portrait and
+recognition imagery, flagship-case chapters, testimonials, Canvas/SVG motion and
+floating navigation. All existing secondary routes remain unchanged.
+
+No dependency was added. The homepage has no horizontal overflow at 320, 375, 768 and
+1440px; its local assets and interactions render without browser errors. TypeScript,
+lint, unit tests, stable-state WCAG 2.2 AA and the complete browser suite pass using
+the installed system Chrome. The Next.js webpack production build prerenders all 15
+pages successfully; the normal Turbopack build is blocked only by the sandbox's
+child-process port restriction.
+
+## Complete homepage replacement — 2026-10-14
+
+The supplied full portfolio now replaces only `/`: 39 responsive sections covering
+positioning, proof, four case-study chapters, leadership, impact, future thinking,
+about and conversation. It includes the exact light/dark visual system, sticky header,
+Canvas/SVG figures and interactive leadership reading. Work remains reachable from the
+primary Work navigation; every other route is unchanged.
+
+No dependency was added. Desktop and mobile dimensions match the source exactly;
+TypeScript, lint, 13 unit tests, all 22 Chrome E2E tests and the homepage WCAG 2.2 AA
+axe scan pass.
+
 ## Leadership homepage update — 2026-10-12
 
 The approved v3 leadership portfolio now replaces only `/`. It preserves the reference

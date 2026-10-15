@@ -1,5 +1,26 @@
 # Architecture
 
+## Final crisp homepage replacement — 2026-10-15
+
+Only `/` was replaced. `content/home.ts` contains the trusted nine-section markup and
+route-local visual system; `LeadershipHome` renders it from `getHome()`, and the small
+`LeadershipMotion` client leaf loads the approved browser runtime after hydration.
+The final homepage owns its sticky header and footer while mounted. Its Work,
+Leadership and About items are in-page anchors exactly as supplied. Existing `/work`,
+detail, Ideas, Resume and other routes remain available and unchanged.
+
+## Complete homepage replacement — 2026-10-14
+
+Only `/` was replaced. `content/home.ts` now holds the approved, trusted standalone
+homepage markup and route-scoped design source; `getHome()` remains the content boundary
+and `page.tsx` remains a thin Server Component. `LeadershipHome` renders the trusted
+local markup, while `LeadershipMotion` is the single client leaf that initializes the
+theme control, leadership reading selector, Canvas hero and three SVG diagrams.
+
+The homepage continues to suppress the shared shell only while its root is mounted.
+The Work item retains `/work`; all other supplied navigation anchors remain in-page.
+No other route, content source, or shared component changed.
+
 ## Leadership homepage update — 2026-10-12
 
 `/` is now the approved long-form leadership portfolio: proof, Productize narrative,

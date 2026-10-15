@@ -1,5 +1,20 @@
 # Folder Structure
 
+## Final crisp homepage replacement — 2026-10-15
+
+The replacement stays within the existing homepage files: `content/home.ts`,
+`LeadershipHome.tsx`, `LeadershipMotion.tsx` and the existing `home.css` shell rule.
+The supplied runtime is served from `public/scripts/home-final.js`; its twelve decoded
+WebP assets live in `public/images/home/final/`. Homepage flow and responsive tests
+were updated in place. No route or dependency folder was added.
+
+## Complete homepage replacement — 2026-10-14
+
+No folder or route was added. The replacement is contained in the existing homepage
+files: `content/home.ts`, `src/components/blocks/LeadershipHome.tsx`,
+`src/components/blocks/LeadershipMotion.tsx`, and the existing route-scoping rules in
+`src/app/home.css`. Homepage flow/responsive tests were updated in place.
+
 ## Leadership homepage update — 2026-10-12
 
 Added `src/components/blocks/LeadershipHome.tsx` and

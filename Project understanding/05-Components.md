@@ -1,5 +1,24 @@
 # Components
 
+## Final crisp homepage replacement — 2026-10-15
+
+- `LeadershipHome` remains the small Server Component rendering trusted local markup.
+- `LeadershipMotion` is the single homepage client leaf that mounts the supplied
+  interaction runtime.
+- The reference's tabs, chapter switcher, accordions, testimonial selector, floating
+  section navigator, digital-twin dialog and reusable cards remain semantic patterns
+  inside the approved source. Shared Work and baseline UI components are unchanged.
+
+## Complete homepage replacement — 2026-10-14
+
+- `LeadershipHome` is now a small Server Component that renders the approved trusted
+  homepage source from `getHome()`.
+- `LeadershipMotion` is the homepage-only client runtime for the theme button, the
+  five-state leadership reading, Canvas strands and generated SVG diagrams.
+- The reference's reusable visual patterns—cards, metric trios, flows, comparisons,
+  statement bands, story panels and evidence slots—remain class-driven within the
+  supplied homepage system. Shared Work and UI components are unchanged.
+
 ## Leadership homepage update — 2026-10-12
 
 - `LeadershipHome`: server-rendered homepage composition and semantic narrative.

@@ -1,5 +1,27 @@
 # Design System
 
+## Final crisp homepage replacement — 2026-10-15
+
+The homepage now preserves the supplied light-only crisp system: Hanken Grotesk,
+1120px shell, white and `#F5F5F7` surfaces, near-black ink, restrained violet accent,
+thin rules, editorial spacing and compact rounded panels. Its nine-section desktop
+render is 20,652px at 1440px; mobile is 22,915px at 375px, both without horizontal
+overflow. The supplied responsive rules and visuals are unchanged; only the external
+font URL was replaced by the existing self-hosted Hanken variable.
+
+## Complete homepage replacement — 2026-10-14
+
+The homepage now matches the supplied 39-section reference: Hanken Grotesk, a 1120px
+shell, centered balanced headlines, white/soft-gray alternation, full-bleed black
+statement bands, restrained violet emphasis, thin rules, and compact 12–20px radii.
+Its light/dark semantic values are centralized as ground, tint, panel, ink, soft, rule,
+rule-strong and accent variables. Typography and spacing use fluid clamp scales from
+the source. Desktop and mobile render at the reference dimensions without overflow.
+
+The homepage system remains local to the mounted design and does not replace Work or
+the baseline shared tokens. Hanken Grotesk continues to use the existing self-hosted
+`next/font` variable instead of the reference's external Google Fonts request.
+
 ## Leadership homepage update — 2026-10-12
 
 The homepage has a scoped editorial system based on the approved v3 reference:

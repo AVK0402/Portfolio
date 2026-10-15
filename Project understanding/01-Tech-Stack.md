@@ -1,5 +1,20 @@
 # Tech Stack
 
+## Final crisp homepage replacement — 2026-10-15
+
+The approved crisp standalone portfolio now runs on the existing Next.js 16.3.4,
+React 19.2.8, strict TypeScript and Hanken Grotesk stack. Its supplied CSS, SVG,
+Canvas and browser interactions are preserved through the existing trusted homepage
+content boundary and one client-only runtime. Twelve WebP images were extracted to
+local public assets. No package, version or external font request was added.
+
+## Complete homepage replacement — 2026-10-14
+
+The supplied standalone portfolio was translated into the existing Next.js 16,
+React 19, TypeScript and Hanken Grotesk setup. Canvas, inline SVG, native DOM events,
+CSS custom properties, media queries and localStorage reproduce its diagrams, theme
+control and leadership selector. No dependency or version changed.
+
 ## Leadership homepage update — 2026-10-12
 
 The homepage now uses Hanken Grotesk through the existing `next/font/google`

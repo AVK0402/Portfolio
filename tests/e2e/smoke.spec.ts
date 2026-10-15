@@ -24,7 +24,11 @@ test("skip link is the first tab stop and jumps to main content", async ({ page 
 });
 
 test("home page passes axe WCAG 2.2 AA scan", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  // Scan the floating invitation in its fully visible resting state, not while
+  // opacity is transitioning against the page background.
+  await page.locator(".twin-fab").evaluate((element) => element.classList.add("on"));
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag22aa"])
     .analyze();

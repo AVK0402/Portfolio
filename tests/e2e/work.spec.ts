@@ -3,6 +3,7 @@ import { expect, test } from "@playwright/test";
 test("Primary navigation stays sticky without overlapping the Work header", async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   for (const width of [320, 375, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of ["/", "/work"]) {

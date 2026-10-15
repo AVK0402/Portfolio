@@ -1,5 +1,31 @@
 # Risks and Constraints
 
+## Final crisp homepage replacement — 2026-10-15
+
+- The digital-twin dialog intentionally retains the supplied `Video to add` and AI
+  disclosure placeholders because no media was provided.
+- `Download résumé` and `Schedule a conversation` remain non-links exactly as supplied;
+  LinkedIn and email use the approved destinations embedded in the reference.
+- The animated word progression uses intentionally pale intermediate colors. The
+  stable reduced-motion experience passes the WCAG 2.2 AA automated scan.
+- The trusted runtime is local source and must not accept visitor-authored code or
+  markup. Its generated Canvas/SVG work remains the main low-power-device area to
+  monitor.
+- The final homepage nav uses in-page anchors; the existing `/work` route still exists
+  but is no longer linked from that header.
+
+## Complete homepage replacement — 2026-10-14
+
+- The approved source intentionally contains dashed `To add` / evidence placeholders,
+  an empty portrait surface, and non-linked scheduling, LinkedIn and email labels.
+  They remain visible rather than inventing missing proof, media or URLs.
+- Homepage HTML and styles are stored as a trusted local string and rendered as markup;
+  it must never accept unsanitized external or visitor-authored content.
+- The route is intentionally long: 37,155px at 1440px and 40,463px at 375px in the
+  verified light/reduced-motion renders.
+- The full homepage design system is self-contained while mounted. Shared Work and
+  other route styling must continue to be regression-tested after homepage changes.
+
 ## Leadership homepage update — 2026-10-12
 
 - The approved reference contains only a portrait/work-image placeholder. The homepage

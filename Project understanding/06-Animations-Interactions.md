@@ -1,5 +1,28 @@
 # Animations and Interactions
 
+## Final crisp homepage replacement — 2026-10-15
+
+The supplied interaction model is preserved: particle-built hero and closing lines,
+scroll progress, active sticky navigation, Productize/Transform tabs, Before/After
+control, expandable beats, generated SVG diagrams, count-up metrics, testimonial
+filters, floating section navigation and the digital-twin dialog. Native browser APIs
+provide all behavior; no animation library was added. Reduced-motion removes the intro,
+smooth scrolling, animated reveals and dimmed word progression while leaving every
+control and all content available.
+
+Horizontal product galleries keep their native scroll and snap behavior, but the
+3px transparent-track scrollbar thumb is revealed only on hover or keyboard focus.
+
+## Complete homepage replacement — 2026-10-14
+
+The previous neural intro/reveal/scrub runtime was replaced by the supplied interaction
+model. The hero Canvas draws deterministic strands converging into a violet path; three
+SVG figures are generated from fixed seeds; the five leadership signals update one
+live reading/proof panel; and the theme button follows system preference until the
+visitor chooses and persists light/dark in localStorage. The sticky header and smooth
+in-page navigation are native CSS. Reduced-motion disables smooth scrolling. No motion
+or interaction library was added.
+
 ## Leadership homepage update — 2026-10-12
 
 The hero reproduces the approved neural animation: particles converge from two fields

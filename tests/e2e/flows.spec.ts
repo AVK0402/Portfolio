@@ -6,39 +6,38 @@ import { expect, test } from "@playwright/test";
  */
 
 test.describe("Critical flows", () => {
-  test("homepage: primary navigation reaches its configured routes", async ({
+  test("homepage: primary navigation reaches its supplied sections", async ({
     page,
   }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    const nav = page.getByRole("navigation", { name: "Primary" });
 
-    for (const [label, route] of [
-      ["About", "about"],
+    for (const [label, target] of [
       ["Work", "work"],
-      ["Thinking", "ideas"],
+      ["Leadership", "leadership"],
+      ["About", "about"],
     ]) {
-      await nav.getByRole("link", { name: label, exact: true }).click();
-      await expect(page).toHaveURL(new RegExp(`/${route}$`));
-      await expect(page.getByRole("main")).toBeVisible();
       await page.goto("/");
+      await page
+        .getByRole("navigation", { name: "Primary" })
+        .getByRole("link", { name: label, exact: true })
+        .click();
+      await expect(page).toHaveURL(new RegExp(`/#${target}$`));
+      await expect(page.locator(`#${target}`)).toBeInViewport();
     }
   });
 
-  test("homepage narrative CTA reaches the Productize chapter", async ({ page }) => {
+  test("homepage narrative CTA reaches the featured work chapter", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("link", { name: "Read the work ↓" }).click();
-    await expect(page).toHaveURL(/\/#productize$/);
-    await expect(page.locator("#productize")).toBeInViewport();
+    await expect(page).toHaveURL(/\/#work$/);
+    await expect(page.locator("#work")).toBeInViewport();
   });
 
   test("Work story and existing case-study detail remain reachable", async ({
     page,
   }) => {
-    await page.goto("/");
-    await page
-      .getByRole("navigation", { name: "Primary" })
-      .getByRole("link", { name: "Work" })
-      .click();
+    await page.goto("/work");
     await expect(page).toHaveURL(/\/work$/);
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
@@ -74,15 +73,13 @@ test.describe("Critical flows", () => {
     expect(response.headers()["content-type"]).toContain("application/pdf");
   });
 
-  test("contact: reachable from the homepage CTA", async ({ page }) => {
+  test("conversation: reachable from the homepage CTA", async ({ page }) => {
     await page.goto("/");
     await page
-      .getByRole("link", { name: "Let's connect", exact: true })
+      .getByRole("link", { name: /Let's connect/ })
       .first()
       .click();
-    await expect(page).toHaveURL(/\/contact$/);
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Contact" }),
-    ).toBeVisible();
+    await expect(page).toHaveURL(/\/#connect$/);
+    await expect(page.locator("#connect")).toBeInViewport();
   });
 });
