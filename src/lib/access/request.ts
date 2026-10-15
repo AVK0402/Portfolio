@@ -3,12 +3,46 @@ export const LOCAL_SESSION_COOKIE = "portfolio-access";
 
 type RequestDetails = Pick<Request, "headers" | "url">;
 
+function firstHeaderValue(value: string | null) {
+  return value?.split(",")[0]?.trim();
+}
+
+export function getPublicOrigin(request: RequestDetails) {
+  const requestUrl = new URL(request.url);
+  const forwardedProtocol = firstHeaderValue(
+    request.headers.get("x-forwarded-proto"),
+  )?.toLowerCase();
+  const protocol =
+    forwardedProtocol === "http" || forwardedProtocol === "https"
+      ? forwardedProtocol
+      : requestUrl.protocol.slice(0, -1);
+  const host =
+    firstHeaderValue(request.headers.get("x-forwarded-host")) ??
+    firstHeaderValue(request.headers.get("host")) ??
+    requestUrl.host;
+
+  try {
+    return new URL(`${protocol}://${host}`).origin;
+  } catch {
+    return requestUrl.origin;
+  }
+}
+
+export function isSameOriginRequest(request: RequestDetails) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+
+  try {
+    return new URL(origin).origin === getPublicOrigin(request);
+  } catch {
+    return false;
+  }
+}
+
 export function isSecureRequest(request: RequestDetails) {
-  const forwardedProtocol = request.headers
-    .get("x-forwarded-proto")
-    ?.split(",")[0]
-    ?.trim()
-    .toLowerCase();
+  const forwardedProtocol = firstHeaderValue(
+    request.headers.get("x-forwarded-proto"),
+  )?.toLowerCase();
   return forwardedProtocol
     ? forwardedProtocol === "https"
     : new URL(request.url).protocol === "https:";

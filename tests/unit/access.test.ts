@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { getActiveGrants, readAccessConfig } from "@/lib/access/config";
 import { findMatchingGrant } from "@/lib/access/password";
-import { sanitizeReturnTo } from "@/lib/access/request";
+import {
+  getPublicOrigin,
+  isSameOriginRequest,
+  sanitizeReturnTo,
+} from "@/lib/access/request";
 import { issueSession, verifySession } from "@/lib/access/session";
 import { proxy } from "@/proxy";
 
@@ -88,6 +92,30 @@ describe("portfolio access boundary", () => {
     expect(sanitizeReturnTo("https://attacker.example")).toBe("/");
     expect(sanitizeReturnTo("//attacker.example")).toBe("/");
     expect(sanitizeReturnTo("/access")).toBe("/");
+  });
+
+  it("uses trusted proxy headers for same-origin checks and redirects", () => {
+    const request = new Request("http://internal:3000/api/access/login", {
+      headers: {
+        host: "internal:3000",
+        origin: "https://anish789.netlify.app",
+        "x-forwarded-host": "anish789.netlify.app",
+        "x-forwarded-proto": "https",
+      },
+    });
+
+    expect(getPublicOrigin(request)).toBe("https://anish789.netlify.app");
+    expect(isSameOriginRequest(request)).toBe(true);
+    expect(
+      isSameOriginRequest(
+        new Request(request.url, {
+          headers: {
+            ...Object.fromEntries(request.headers),
+            origin: "https://attacker.example",
+          },
+        }),
+      ),
+    ).toBe(false);
   });
 
   it("redirects anonymous pages, leaves the access route public, and accepts a session", () => {

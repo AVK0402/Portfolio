@@ -3,21 +3,22 @@ import { getActiveGrants, readAccessConfig } from "@/lib/access/config";
 import { findMatchingGrant } from "@/lib/access/password";
 import {
   getSessionCookieName,
+  getPublicOrigin,
   isSecureRequest,
+  isSameOriginRequest,
   sanitizeReturnTo,
 } from "@/lib/access/request";
 import { issueSession } from "@/lib/access/session";
 
 function accessRedirect(request: Request, returnTo: string, error?: string) {
-  const url = new URL("/access", request.url);
+  const url = new URL("/access", getPublicOrigin(request));
   if (returnTo !== "/") url.searchParams.set("returnTo", returnTo);
   if (error) url.searchParams.set("error", error);
   return NextResponse.redirect(url, 303);
 }
 
 export async function POST(request: Request) {
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
+  if (!isSameOriginRequest(request)) {
     return new Response("Forbidden", { status: 403 });
   }
 
@@ -45,7 +46,10 @@ export async function POST(request: Request) {
   if (!grant) return accessRedirect(request, returnTo, "invalid");
 
   const session = issueSession(grant, configResult.config, now);
-  const response = NextResponse.redirect(new URL(returnTo, request.url), 303);
+  const response = NextResponse.redirect(
+    new URL(returnTo, getPublicOrigin(request)),
+    303,
+  );
   const secure = isSecureRequest(request);
   response.cookies.set(getSessionCookieName(request), session.token, {
     httpOnly: true,
