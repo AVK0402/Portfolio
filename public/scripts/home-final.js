@@ -1445,7 +1445,11 @@
   /* ---------- Digital twin: floating invitation and overlay ---------- */
   (function () {
     var fab = $(".twin-fab"),
-      dlg = $("#twin");
+      dlg = $("#twin"),
+      video = dlg && $("video", dlg),
+      media = dlg && $(".twin-media", dlg),
+      play = dlg && $(".twin-play", dlg),
+      qualityButtons = dlg ? $$(".twin-q button", dlg) : [];
     if (!fab || !dlg || typeof dlg.showModal !== "function") return;
     function showFab() {
       /* the invitation waits until the reader starts scrolling, so the first screen stays clean */
@@ -1472,11 +1476,65 @@
     $$("[data-twin]").forEach(function (a) {
       a.addEventListener("click", open);
     });
+    if (video && media && play) {
+      play.addEventListener("click", function () {
+        video.controls = true;
+        media.classList.add("is-playing");
+        var started = video.play();
+        if (started && typeof started.catch === "function") {
+          started.catch(function () {
+            video.controls = false;
+            media.classList.remove("is-playing");
+          });
+        }
+      });
+      video.addEventListener("ended", function () {
+        video.controls = false;
+        video.currentTime = 0;
+        media.classList.remove("is-playing");
+      });
+      qualityButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var src = button.getAttribute("data-src");
+          if (!src || video.getAttribute("src") === src) return;
+          var currentTime = video.currentTime || 0,
+            wasPlaying = !video.paused && !video.ended;
+          qualityButtons.forEach(function (item) {
+            item.setAttribute("aria-pressed", item === button ? "true" : "false");
+          });
+          video.setAttribute("src", src);
+          if (currentTime > 0 || wasPlaying) {
+            video.addEventListener(
+              "loadedmetadata",
+              function () {
+                video.currentTime = Math.min(
+                  currentTime,
+                  video.duration || currentTime,
+                );
+                if (wasPlaying) {
+                  var resumed = video.play();
+                  if (resumed && typeof resumed.catch === "function")
+                    resumed.catch(function () {});
+                }
+              },
+              { once: true },
+            );
+          }
+          video.load();
+        });
+      });
+    }
     $(".td-x", dlg).addEventListener("click", close);
     dlg.addEventListener("click", function (e) {
       if (e.target === dlg) close();
     });
     dlg.addEventListener("close", function () {
+      if (video) {
+        video.pause();
+        video.controls = false;
+        video.currentTime = 0;
+      }
+      if (media) media.classList.remove("is-playing");
       fab.classList.add("on");
       try {
         history.replaceState(null, "", location.pathname + location.search);

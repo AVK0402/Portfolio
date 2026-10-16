@@ -178,6 +178,15 @@ behavior, escape/outside-click semantics where applicable, and focus management.
 - Use duration/easing tokens, transform/opacity where possible, and avoid layout-heavy
   animation.
 - Reduced-motion users must receive a stable, immediately understandable state.
+
+## Digital-twin overlay — 2026-10-16
+
+The floating invitation opens an explicitly centered, 860px-capped editorial dialog. A custom,
+keyboard-accessible play control sits over the approved poster; activating it reveals
+native browser controls and plays the local MP4. Closing the dialog or finishing the
+video resets playback to the poster. The supplied 1080p and 720p sources can be
+switched without losing the current playback position.
+
 - Do not delay essential content or make animation a prerequisite for navigation.
 - Add behavior-oriented tests for critical new interactions, especially forms, menus,
   and focus management.

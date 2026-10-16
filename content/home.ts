@@ -611,15 +611,43 @@ html.js .twin-fab.on { opacity: 1; transform: none; pointer-events: auto; }
 html.js .twin-fab.on:hover { transform: translateY(-2px); }
 @media (max-width: 560px) { .twin-fab { padding: .4rem; } .tf-l { display: none; } }
 
-.twin-dlg { width: min(1000px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 28px; background: var(--ground); color: var(--ink); overflow: auto; }
+.twin-dlg { position: fixed; inset: 0; width: min(860px, calc(100vw - 40px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; padding: 0; border: 0; border-radius: 24px; background: var(--ground); color: var(--ink); overflow: auto; }
 .twin-dlg::backdrop { background: rgba(0,0,0,.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.td-in { position: relative; padding: clamp(1.5rem, 4vw, 2.75rem); text-align: center; --sbg: var(--ground); }
-.td-x { position: absolute; top: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.td-in { position: relative; padding: clamp(1.5rem, 3vw, 2.25rem); text-align: center; --sbg: var(--ground); }
+.td-x { position: absolute; top: 1rem; right: 1rem; z-index: 4; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); line-height: 1; cursor: pointer; display: grid; place-items: center; padding: 0; }
 .td-x:hover { border-color: var(--ink); }
-.td-h { margin: .6rem auto 0; font-weight: 600; font-size: clamp(1.6rem, 3.4vw, 2.6rem); line-height: 1.08; letter-spacing: -.035em; max-width: 22ch; text-wrap: balance; }
-.td-p { margin: .9rem auto 0; max-width: 34rem; color: var(--soft); }
+.td-x svg { display: block; }
+.twin-dlg .eyebrow.twin-k { font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+.td-h { margin: .6rem auto 0; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.08; letter-spacing: -.035em; max-width: 22ch; text-wrap: balance; }
+.td-p { margin: .9rem auto 0; max-width: 46rem; color: var(--soft); text-wrap: balance; }
 .twin-dlg .video { margin-top: 1.75rem; }
-.twin-dlg .video .ph { border-radius: 20px; }
+.twin-media { position: relative; border-radius: 18px; overflow: hidden; isolation: isolate; background: #0A0A0B; aspect-ratio: 16/9; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black); transform: translateZ(0); }
+.twin-v { display: block; width: 100%; height: 100%; object-fit: cover; background: #0A0A0B; border-radius: inherit; }
+.twin-play { all: unset; box-sizing: border-box; position: absolute; inset: 0; z-index: 2; cursor: pointer; display: block; border-radius: inherit; color: #fff; background: radial-gradient(ellipse 38% 34% at 50% 60%, rgba(10,10,11,.38), rgba(10,10,11,0) 100%), rgba(10,10,11,.46); transition: background .3s, opacity .3s; }
+.twin-play:hover { background: radial-gradient(ellipse 38% 34% at 50% 60%, rgba(10,10,11,.34), rgba(10,10,11,0) 100%), rgba(10,10,11,.38); }
+.twin-play:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 20px; }
+.twin-play .playbig { background: #fff; color: #0A0A0B; transition: transform .3s var(--ease); }
+.twin-play .playbig::after { border-color: #fff; }
+.twin-play:hover .playbig { transform: scale(1.06); }
+.twin-cta { position: absolute; left: 0; right: 0; top: calc(50% + 62px); display: inline-flex; flex-direction: column; justify-content: center; align-items: center; gap: .2rem; color: #fff; font-size: 1.02rem; font-weight: 500; text-shadow: 0 1px 12px rgba(0,0,0,.45); }
+.twin-dur { font-size: .88rem; font-weight: 400; opacity: .8; }
+.twin-media.is-playing .twin-play { opacity: 0; pointer-events: none; }
+.twin-q { position: absolute; top: .75rem; right: .75rem; z-index: 3; display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(10,10,11,.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.twin-q button { all: unset; box-sizing: border-box; cursor: pointer; font-size: .72rem; font-weight: 600; letter-spacing: .02em; padding: .3rem .65rem; border-radius: 999px; color: rgba(255,255,255,.72); transition: background .2s, color .2s; }
+.twin-q button:hover { color: #fff; }
+.twin-q button[aria-pressed="true"] { background: #fff; color: #0A0A0B; }
+.twin-q button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.twin-note { display: inline-flex; align-items: center; gap: .55rem; text-align: left; }
+.twin-note svg { flex: none; width: 14px; height: 14px; color: var(--rule-strong); }
+@media (max-width: 600px) {
+  .twin-play .playbig { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+  .twin-play .playbig svg { width: 18px; height: 18px; }
+  .twin-play .playbig::after { inset: -7px; }
+  .twin-cta { top: calc(50% + 36px); font-size: .85rem; gap: 0; }
+  .twin-dur { font-size: .78rem; }
+  .twin-q { top: .5rem; right: .5rem; }
+  .twin-q button { font-size: .66rem; padding: .25rem .5rem; }
+}
 @media (prefers-reduced-motion: no-preference) { .twin-dlg[open] { animation: up .45s var(--ease); } .twin-dlg[open]::backdrop { animation: fade .35s ease; } }
 
 
@@ -2230,15 +2258,22 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
 </a>
 <dialog class="twin-dlg" id="twin" aria-labelledby="twin-h">
   <div class="td-in">
-    <button class="td-x" type="button" aria-label="Close">×</button>
-    <p class="eyebrow">Digital twin</p>
-    <h2 class="td-h" id="twin-h">Don't have 20 minutes? Give me 2.</h2>
-    <p class="td-p">A narrated overview, then my AI avatar introduces me and opens the conversation.</p>
-    <div class="video">
-      <div class="ph " style="--ar:16/9" role="img" aria-label="Video to add: 2 minutes · narrated overview, then the AI avatar introduction"><span class="ph-in"><span class="ph-t">Video to add</span><span class="ph-d">2 minutes · narrated overview, then the AI avatar introduction</span></span></div>
-      <span class="playbig" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+    <button class="td-x" type="button" aria-label="Close"><svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    <p class="eyebrow twin-k">A quick introduction</p>
+    <h2 class="td-h" id="twin-h">The short version? Right here.</h2>
+    <p class="td-p">A two-minute glimpse into how I think, what drives me, and the person behind the work.</p>
+    <div class="video twin-media">
+      <video class="twin-v" src="/videos/home/twin.mp4" poster="/images/home/final/twin-poster.jpg" preload="none" playsinline aria-label="Meet my digital twin video"></video>
+      <div class="twin-q" role="group" aria-label="Video quality">
+        <button type="button" data-src="/videos/home/twin.mp4" aria-pressed="true">1080p</button>
+        <button type="button" data-src="/videos/home/twin-720.mp4" aria-pressed="false">720p</button>
+      </div>
+      <button class="twin-play" type="button" aria-label="Play Meet my digital twin video">
+        <span class="playbig" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+        <span class="twin-cta"><span>Meet my digital twin</span><span class="twin-dur">2 min</span></span>
+      </button>
     </div>
-    <p class="vnote"><span class="tag">To add</span> A line under the video stating that the presenter is an AI avatar of Anish.</p>
+    <p class="vnote twin-note"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M10 9v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="6.3" r="1" fill="currentColor"/></svg>Presented through an AI-generated avatar, based on my own words and experiences.</p>
   </div>
 </dialog>
 

@@ -154,6 +154,10 @@ links, required image alt text, and WCAG 2.2 AA intent in all additions.
 
 ## Assets
 
+The digital-twin overlay uses the supplied 1920×1080 poster at
+`public/images/home/final/twin-poster.jpg`, keeping its first impression consistent
+with the approved video rather than introducing unrelated imagery.
+
 The site currently has no production imagery or icons. The image component wraps
 `next/image`, is lazy by default, and exposes `priority` for above-the-fold assets.
 MDX image rendering directly uses `next/image` with fallback dimensions 1200×630.

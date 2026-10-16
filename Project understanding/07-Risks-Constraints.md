@@ -21,8 +21,9 @@
 
 ## Final crisp homepage replacement — 2026-10-15
 
-- The digital-twin dialog intentionally retains the supplied `Video to add` and AI
-  disclosure placeholders because no media was provided.
+- The digital-twin dialog now self-hosts the approved optimized 1080p and 720p MP4s
+  with native browser controls and an AI-avatar disclosure. `preload="none"` prevents
+  the homepage from downloading either video until the visitor chooses to play it.
 - `Download résumé` and `Schedule a conversation` remain non-links exactly as supplied;
   LinkedIn and email use the approved destinations embedded in the reference.
 - The animated word progression uses intentionally pale intermediate colors. The

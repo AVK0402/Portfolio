@@ -19,6 +19,14 @@ The supplied runtime is served from `public/scripts/home-final.js`; its twelve d
 WebP assets live in `public/images/home/final/`. Homepage flow and responsive tests
 were updated in place. No route or dependency folder was added.
 
+## Digital-twin video — 2026-10-16
+
+The approved self-hosted 1080p and 720p MP4s are stored at
+`public/videos/home/{twin,twin-720}.mp4` and are served through the existing
+password-protected request boundary. The homepage dialog references them directly
+from the browser-addressable `/videos/home/` path; no player dependency or new route
+was added.
+
 ## Complete homepage replacement — 2026-10-14
 
 No folder or route was added. The replacement is contained in the existing homepage
