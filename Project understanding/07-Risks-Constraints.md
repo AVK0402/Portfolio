@@ -1,5 +1,40 @@
 # Risks and Constraints
 
+## Transform capability system — 2026-10-18
+
+- The exact concept-film runtime adds about 78KB of local JavaScript source. It uses no
+  added media or dependency, but both homepage films remain the primary runtime-weight
+  and low-power-device area to monitor.
+- The film is explicitly labeled “Concept direction”: agentic chat shipped as v1, while
+  autonomous operations is presented as an evolving direction, not a shipped claim.
+- Mobile has no separately authored film artboard; the supplied 1920 × 992 surface
+  scales down. Its detailed UI is visual evidence, while the accessible figure label
+  communicates the full narrative.
+- Capability explanations and synthetic/masked film content are trusted static source;
+  do not replace them with visitor-authored HTML.
+
+## Productize product film — 2026-10-18
+
+- Visual fidelity depends on twelve local WebP plates and four local WOFF2 font files;
+  the password boundary and deployment must continue serving those public paths.
+- The exact supplied film adds about 219KB of runtime source, about 367KB of WebP
+  plates and about 77KB of font assets. The runtime preloads all twelve plates when the
+  homepage initializes, so this chapter is a measurable page-weight area to monitor.
+- The scene content is trusted static source and must not be populated from visitor
+  HTML. Its masked records are illustrative content from the approved reference.
+- Mobile has no separately authored film layout; the exact artboard scales down without
+  overflow. Its small product copy is visual evidence rather than required reading;
+  the figure's accessible label carries the narrative.
+
+## Updated homepage header — 2026-10-18
+
+- The 241-byte placeholder resume was replaced by the verified tagged, unencrypted,
+  two-page PDF supplied in the approved standalone file.
+- The resume remains behind the existing portfolio access boundary. Native downloads
+  do not require a standalone embedded-data script.
+- The supplied PDF metadata names LibreOffice as its producer and has no document
+  title; this was preserved rather than altered without approval.
+
 ## Non-expiring portfolio access — 2026-10-18
 
 - A non-expiring password increases the impact of disclosure because it remains usable

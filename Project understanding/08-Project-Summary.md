@@ -1,5 +1,42 @@
 # Project Summary
 
+## Impact editorial alignment — 2026-10-18
+
+The next homepage section is aligned with the final supplied source. Impact now records
+London and six countries in the global-scale story and uses the source's three clean,
+text-led editorial rows without the temporary image placeholders. Its metrics, other
+copy, responsive structure and all later homepage sections remain unchanged.
+
+## Transform capability system — 2026-10-18
+
+The next homepage update is complete: Transform now includes the exact supplied idea
+rationale, eighteen-capability agent cloud, four design principles and nine-scene
+autonomous-operations concept film. Capability hover/focus/tap, live explanations,
+film progress, pause/resume, visibility-aware playback and reduced-motion behavior are
+preserved. Desktop and mobile have no horizontal overflow, and the existing Transform
+narrative beats and all later sections remain unchanged. TypeScript, lint, formatting,
+the webpack production build, the focused Productize/Transform browser suite and the
+homepage WCAG 2.2 AA scan pass against the final production build.
+
+## Productize product film — 2026-10-18
+
+The next approved homepage update is complete: Productize now uses the supplied
+thirteen-scene product film instead of the four placeholder screens. It preserves the
+exact local plates, film typography, progress, pause/resume behavior, visibility-aware
+playback and a stable reduced-motion frame. Desktop and 375px checks show no overflow,
+all twelve plates load, controls behave correctly and the former Productize gallery is
+absent. No dependency, route or other homepage chapter changed. Transform remains the
+next section to implement. TypeScript, lint, formatting, the Next.js webpack production
+build and all 13 homepage/critical-flow browser tests pass against the production build.
+
+## Updated homepage header — 2026-10-18
+
+The first approved update from the new standalone source is complete: the homepage
+header replaces “Let's connect” with Resume and LinkedIn utilities, and the supplied
+two-page resume replaces the old placeholder. Existing identity, Work, Leadership,
+About, sticky behavior and responsive composition are preserved. TypeScript, lint,
+formatting, focused browser tests and visual checks at 375px and 1440px pass.
+
 ## Non-expiring portfolio access — 2026-10-18
 
 The existing portfolio password can now remain valid until manually revoked, without

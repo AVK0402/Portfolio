@@ -73,13 +73,31 @@ test.describe("Critical flows", () => {
     expect(response.headers()["content-type"]).toContain("application/pdf");
   });
 
-  test("conversation: reachable from the homepage CTA", async ({ page }) => {
+  test("homepage header: resume downloads and LinkedIn remains reachable", async ({
+    page,
+  }) => {
     await page.goto("/");
-    await page
-      .getByRole("link", { name: /Let's connect/ })
-      .first()
-      .click();
-    await expect(page).toHaveURL(/\/#connect$/);
-    await expect(page.locator("#connect")).toBeInViewport();
+
+    const primary = page.getByRole("navigation", { name: "Primary" });
+    const resume = primary.getByRole("link", { name: "Download resume (PDF)" });
+    await expect(resume).toHaveAttribute("href", "/documents/resume.pdf");
+    await expect(resume).toHaveAttribute(
+      "download",
+      "Anish_Velayudhan_Kutty_Resume.pdf",
+    );
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      resume.click(),
+    ]);
+    expect(download.suggestedFilename()).toBe("Anish_Velayudhan_Kutty_Resume.pdf");
+
+    const linkedin = primary.getByRole("link", {
+      name: "LinkedIn profile (opens in a new tab)",
+    });
+    await expect(linkedin).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/anishvelayudhankutty/",
+    );
+    await expect(linkedin).toHaveAttribute("target", "_blank");
   });
 });

@@ -1,5 +1,38 @@
 # Components
 
+## Impact editorial rows — 2026-10-18
+
+The three existing Impact rows are now the exact text-only structures from the final
+supplied homepage. Their temporary full-width placeholder figures were removed; the
+shared `.irow`, `.ileft` and `.iright` patterns continue to provide the responsive
+composition without a new component or runtime behavior.
+
+## Transform capability system — 2026-10-18
+
+- `.idea` contains the supplied rationale, capability figure and design principles.
+- `.cloud` exposes eighteen native buttons and one live explanatory caption; the
+  existing runtime positions desktop rings and preserves a readable mobile flow.
+- `.prodshot.pf2` is the accessible nine-scene concept film with four progress phases
+  and one play/pause control.
+- The existing eight Transform disclosure rows, chapter switcher and navigation remain
+  unchanged; no duplicate React player, card or tab component was introduced.
+
+## Productize product film — 2026-10-18
+
+The Productize chapter now contains one semantic `.prodshot.pf` figure with an
+accessible narrative label, a generated thirteen-scene stage, progress indicators and
+one play/pause button. It replaces only that chapter's old `.gal-wrap` placeholder;
+the gallery pattern remains available where the homepage still uses it. The film is
+kept within the existing trusted-markup/runtime component boundary instead of adding a
+duplicate React player or animation abstraction.
+
+## Updated homepage header — 2026-10-18
+
+The route-local homepage header keeps its existing identity and three section links.
+Its utility group now contains an accessible Resume download and external LinkedIn
+link, using native anchors and decorative inline SVGs. No new React component or
+shared primitive was required.
+
 ## Portable private-access engine — 2026-10-15
 
 - `AccessPage` is a dynamic Server Component that reads only whether an active grant

@@ -1,5 +1,29 @@
 # Architecture
 
+## Transform capability system — 2026-10-18
+
+Transform remains inside the existing `#tp-transform` tab panel in the trusted
+homepage markup. `content/home.ts` now supplies the approved idea rationale,
+capability cloud and concept-film shell; `public/scripts/home-final.js` owns cloud
+layout/selection and the film scene lifecycle. Both initializers are idempotent for
+React Strict Mode. No route, shared component, data source or secondary page changed.
+
+## Productize product film — 2026-10-18
+
+The Productize chapter remains part of the trusted homepage markup in
+`content/home.ts`. Its former horizontal placeholder gallery was replaced by the
+approved thirteen-scene product film. The existing `LeadershipMotion` client leaf
+continues to load one route-local runtime; `public/scripts/home-final.js` initializes
+the film once and owns its scene lifecycle. No route, shared component boundary or
+secondary page changed.
+
+## Updated homepage header — 2026-10-18
+
+The standalone homepage header remains inside the trusted `content/home.ts` markup.
+Its Work, Leadership and About anchors are unchanged. The former Conversation anchor
+was replaced by a native download link to the existing protected public-document path
+and an external LinkedIn link; no client boundary, route or runtime handler was added.
+
 ## Non-expiring portfolio access — 2026-10-18
 
 The grant schema accepts `expiresAt: null` only when non-expiring access is intentional;

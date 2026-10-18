@@ -340,6 +340,10 @@ section[id] { scroll-margin-top: 5rem; }
 .talk-actions { margin-top: clamp(1.75rem, 4vw, 2.75rem); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 2rem; font-weight: 600; }
 .talk-actions .btn { padding: 1rem 1.7rem; font-size: 1.0625rem; }
 .talk-actions .alt { border-bottom: 1px solid var(--rule-strong); padding-bottom: .15rem; }
+.talk-line { margin: clamp(1.75rem, 4vw, 2.75rem) auto 0; max-width: 34ch; text-align: center; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.5; color: var(--soft); }
+.talk-line a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: .05em; white-space: nowrap; transition: opacity .25s; }
+.talk-line a:hover { opacity: .7; }
+.talk-line a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 .foot { border-top: 1px solid var(--rule); padding-block: 1.5rem; font-size: .85rem; color: var(--soft); text-align: center; }
 
 
@@ -816,13 +820,19 @@ html.intro-on.bar-early .bar { opacity: 1; transform: none; pointer-events: auto
 .nav-cta, .lnk { transition: opacity .25s, border-color .3s; }
 .nav-cta:hover { opacity: .7; }
 .lnk:hover { border-color: transparent; opacity: .7; }
+.nav-cta .dl { display: inline-block; transition: transform .35s var(--ease); }
+.nav-cta:hover .dl { transform: translateY(2px); }
 
-/* Theme toggle lives at the far right edge, as a utility after the CTA */
+/* Header utilities: resume + LinkedIn */
+.nav-util { display: inline-flex; align-items: center; gap: clamp(.9rem, 1.6vw, 1.25rem); }
+.nav-li { display: inline-flex; align-items: center; color: var(--ink); transition: opacity .25s; line-height: 0; }
+.nav-li:hover { opacity: .7; }
+.nav-li:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 .bar .nav { gap: clamp(1.25rem, 3vw, 2.5rem); }
 @media (max-width: 760px) {
-  .bar .nav-cta { margin-left: auto; }
+  .bar .nav-util { margin-left: auto; }
 }
-@media (max-width: 340px) { .bar .nav-cta { margin-left: auto; } }
+@media (max-width: 340px) { .bar .nav-util { margin-left: auto; } }
 
 /* Theme switch in the footer */
 .foot-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; text-align: left; }
@@ -1467,6 +1477,161 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
 .v-more { margin-top: clamp(1.75rem, 3.5vw, 2.5rem); }
 .rc-who { align-items: flex-start; } .rc-who .v-av { margin-top: .1rem; }
 
+
+@font-face { font-family: PFLato; font-style: normal; font-weight: 400; font-display: block; src: url("/fonts/home/product-film/lato-400.woff2") format("woff2"); }
+@font-face { font-family: PFLato; font-style: normal; font-weight: 500; font-display: block; src: url("/fonts/home/product-film/lato-500.woff2") format("woff2"); }
+@font-face { font-family: PFLato; font-style: normal; font-weight: 600; font-display: block; src: url("/fonts/home/product-film/lato-600.woff2") format("woff2"); }
+@font-face { font-family: PFLato; font-style: normal; font-weight: 700; font-display: block; src: url("/fonts/home/product-film/lato-700.woff2") format("woff2"); }
+
+/* ================= Product film (hero showcase) ================= */
+.prodshot.pf { position: relative; aspect-ratio: 1920 / 992; background: #fff; isolation: isolate; }
+.pf-view { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.pf-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 992px; transform-origin: 0 0; font-family: PFLato, "Lato", var(--sans); color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+.pf-stage * { box-sizing: border-box; }
+.pf-scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; background: #fff; overflow: hidden; }
+.pf-scene.on { visibility: visible; }
+.pf-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.pf-scene.dark { background: #000; color: #EDEDED; }
+.pf-a { position: absolute; }
+/* chrome */
+.pf-logo { left: 44px; top: 30px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; letter-spacing: .02em; color: #111; }
+.pf-mark { width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor; position: relative; }
+.pf-mark::before, .pf-mark::after { content: ""; position: absolute; border-radius: 50%; border: 2px solid currentColor; }
+.pf-mark::before { inset: 4px; }
+.pf-mark::after { inset: 9px; background: currentColor; }
+.pf-nav { left: 50%; top: 20px; transform: translateX(-50%); display: flex; gap: 20px; align-items: center; }
+.pf-nav i { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: #1A1A1A; }
+.pf-nav i.on { background: #111; color: #fff; }
+.pf-nav svg, .pf-ico svg { width: 26px; height: 26px; }
+.pf-right { right: 44px; top: 20px; display: flex; gap: 30px; align-items: center; }
+.pf-right .pf-ico { color: #1A1A1A; display: grid; place-items: center; }
+.pf-av { width: 40px; height: 40px; border-radius: 50%; background: #E7EEF7; border: 2px solid #2E7D32; display: grid; place-items: center; font-size: 14px; font-weight: 700; color: #234; }
+.pf-kick { left: 44px; top: 106px; font-size: 12px; color: #6B6B6B; }
+.pf-h1 { left: 44px; top: 128px; font-size: 16px; font-weight: 700; }
+.pf-pn { left: 44px; top: 168px; font-size: 12px; color: #6B6B6B; }
+.pf-pn b { display: block; margin-top: 4px; font-size: 16px; color: #111; font-weight: 700; }
+.pf-hm { left: 175px; top: 178px; font-size: 15px; letter-spacing: .02em; }
+.pf-hm::before { content: ""; position: absolute; left: -34px; top: -14px; width: 1px; height: 46px; background: #DDD; }
+.pf-btn { height: 36px; padding: 0 14px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; border: 1px solid #111; color: #111; background: #fff; white-space: nowrap; }
+.pf-btn.k { background: #111; color: #fff; }
+.pf-btn.g { background: #E6E6E6; border-color: #E6E6E6; color: #8A8A8A; }
+.pf-foot { left: 0; right: 0; bottom: 0; height: 62px; border-top: 1px solid #E6E6E6; background: #fff; }
+.pf-tut { left: 44px; top: 18px; display: flex; gap: 10px; align-items: center; font-size: 14px; font-weight: 700; }
+.pf-play { width: 24px; height: 24px; border-radius: 50%; background: #111; position: relative; }
+.pf-play::after { content: ""; position: absolute; left: 9px; top: 7px; border-left: 8px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.pf-steps { left: 50%; top: 0; transform: translateX(-50%); display: flex; align-items: center; gap: 28px; height: 62px; border-top: 2px solid #111; padding: 0 6px; }
+.pf-steps i { width: 26px; height: 26px; color: #1A1A1A; display: grid; place-items: center; }
+.pf-steps .cur { background: #111; color: #fff; height: 40px; padding: 0 12px; display: flex; gap: 10px; align-items: center; width: auto; font-style: normal; font-size: 11px; line-height: 1.25; }
+.pf-steps .cur svg { width: 22px; height: 22px; }
+.pf-steps svg { width: 24px; height: 24px; }
+.pf-gray { background: #F4F4F4; }
+.pf-card { background: #fff; }
+.pf-t12 { font-size: 12px; } .pf-t13 { font-size: 13px; } .pf-t14 { font-size: 14px; } .pf-t15 { font-size: 15px; } .pf-t16 { font-size: 16px; }
+.pf-b { font-weight: 700; }
+.pf-mut { color: #6B6B6B; }
+.pf-row { display: flex; align-items: center; }
+.pf-chk { width: 16px; height: 16px; border: 1.5px solid #6B6B6B; border-radius: 2px; display: inline-grid; place-items: center; flex: none; transition: background .25s, border-color .25s; }
+.pf-chk.on { background: #111; border-color: #111; }
+.pf-chk.on::after { content: ""; width: 8px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px, -1px); }
+.pf-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.pf-g { background: #2E9B3E; } .pf-o { background: #F5A623; } .pf-r { background: #E53935; }
+.pf-input { height: 34px; border: 1px solid #CFCFCF; background: #fff; display: flex; align-items: center; padding: 0 12px; gap: 8px; font-size: 13px; color: #8A8A8A; }
+.pf-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pf-tbl th { text-align: left; font-weight: 400; color: #555; font-size: 14px; padding: 0 12px 18px; }
+.pf-tbl td { padding: 13px 12px; border-bottom: 1px solid #E3E3E3; white-space: nowrap; }
+.pf-mask { letter-spacing: .02em; }
+.pf-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 12px; border: 1px solid #333; border-radius: 999px; font-size: 11px; }
+.pf-pill { display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 24px; background: #F2F2F2; font-size: 13px; position: relative; }
+.pf-pill::after { content: ""; position: absolute; right: 8px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: #2E9B3E; }
+/* cursor */
+.pf-cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 50; pointer-events: none; opacity: 0; filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+.pf-ring { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid rgba(37,99,235,.55); z-index: 49; pointer-events: none; }
+/* modal scrim */
+.pf-scrim { position: absolute; inset: 0; background: rgba(96,145,224,.45); backdrop-filter: blur(3px); }
+/* graph */
+.pf-node { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 700; color: #1A1A1A; }
+.pf-nlab { position: absolute; transform: translateX(-50%); font-size: 12px; white-space: nowrap; }
+/* film overlay (real CSS px) */
+.pf-ov { position: absolute; left: clamp(10px, 1.6vw, 18px); bottom: clamp(10px, 1.6vw, 18px); z-index: 5; display: flex; align-items: center; gap: .6rem; padding: .45rem .8rem .45rem .45rem; border-radius: 999px; background: rgba(255,255,255,.86); backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4); box-shadow: 0 6px 24px -10px rgba(10,10,20,.35), 0 0 0 1px rgba(10,10,20,.06); font-family: var(--sans); transition: background .6s, color .6s; }
+.pf-ov.dk { background: rgba(20,20,22,.78); color: #F2F2F2; box-shadow: 0 6px 24px -10px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08); }
+.pf-ov-n { width: 1.75rem; height: 1.75rem; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-size: .7rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pf-ov.dk .pf-ov-n { background: #fff; color: #0A0A0B; }
+.pf-ov-t { display: grid; line-height: 1.2; }
+.pf-ov-t b { font-size: .8rem; font-weight: 600; letter-spacing: -.005em; }
+.pf-ov-t span { font-size: .72rem; opacity: .7; }
+.pf-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 5; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+.prodshot.pf2 .pf-bar { grid-template-columns: repeat(4, 1fr); }
+.pf-bar i { background: rgba(10,10,20,.08); overflow: hidden; position: relative; }
+.pf-bar i b { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0); background: var(--accent); }
+.pf-ctl { position: absolute; right: clamp(10px, 1.6vw, 18px); bottom: clamp(10px, 1.6vw, 18px); z-index: 5; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; background: rgba(255,255,255,.86); color: var(--ink); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(10,10,20,.08); transition: background .6s, color .6s; }
+.pf-ctl.dk { background: rgba(20,20,22,.78); color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.1); }
+.pf-ctl:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 600px) { .pf-ov-t span { display: none; } .pf-ov { padding: .35rem .6rem .35rem .35rem; } .pf-ov-n { width: 1.4rem; height: 1.4rem; font-size: .62rem; } .pf-ov-t b { font-size: .7rem; } .pf-ctl { width: 1.8rem; height: 1.8rem; } }
+.pf-plate { position: absolute; left: 0; top: 0; width: 1920px; height: 992px; user-select: none; pointer-events: none; }
+.pf-tx { position: absolute; white-space: nowrap; line-height: 1; }
+.pf-ctl[hidden] { display: none; } @media (max-width: 600px) { .pf-ov { gap: .4rem; padding: .25rem .5rem .25rem .25rem; left: 8px; bottom: 8px; } .pf-ov-n { width: 1.2rem; height: 1.2rem; font-size: .55rem; } .pf-ov-t b { font-size: .62rem; } .pf-ctl { width: 1.5rem; height: 1.5rem; right: 8px; bottom: 8px; } .pf-ctl svg { width: 10px; height: 10px; } }
+.prodshot.pf .pf-stage img { display: block; width: auto; height: auto; max-width: none; }
+.prodshot.pf .pf-stage img.pf-plate { width: 1920px; height: 992px; }
+.pf-ov { transition: background .6s, color .6s, opacity .7s ease, transform .7s ease; }
+.pf-ov.off { opacity: 0; transform: translateY(8px); }
+
+.prodshot.pf { text-align: left; }
+
+/* ================= Transform: the idea + capability cloud ================= */
+.idea { margin: clamp(3rem, 6vw, 4.5rem) auto 0; max-width: 1000px; text-align: center; }
+.idea-h { margin-top: .7rem; font-weight: 600; font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.1; letter-spacing: -.03em; }
+.idea-h span { display: block; }
+.idea-why, .idea-pr { list-style: none; padding: 0; margin: clamp(2rem, 4vw, 2.75rem) auto 0; display: grid; gap: 0; text-align: left; border-top: 1px solid var(--rule); }
+.idea-why { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.idea-pr { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.idea-why li, .idea-pr li { padding: 1.25rem 1.25rem 0 0; display: grid; gap: .35rem; align-content: start; }
+.idea-why li + li, .idea-pr li + li { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+.idea-why b, .idea-pr b { font-weight: 600; font-size: 1rem; letter-spacing: -.01em; color: var(--ink); }
+.idea-why span:not(.iw-n), .idea-pr span:not(.iw-n) { color: var(--soft); font-size: .95rem; line-height: 1.55; }
+.iw-n { font-size: .75rem; font-weight: 600; color: var(--soft); font-variant-numeric: tabular-nums; }
+.cloud { margin: clamp(2.5rem, 5vw, 3.5rem) auto 0; }
+.cloud-stage { position: relative; width: 100%; aspect-ratio: 16 / 10; }
+.cloud-rings { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cloud-rings ellipse { fill: none; stroke: var(--rule-strong); stroke-width: 1.25px; vector-effect: non-scaling-stroke; stroke-dasharray: 3 5; }
+.cloud-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 9.5rem; height: 9.5rem; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-content: center; text-align: center; gap: .15rem; box-shadow: 0 0 0 10px rgba(10,10,11,.04), 0 0 0 22px rgba(10,10,11,.025); z-index: 2; }
+.cloud-core b { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
+.cloud-core span { font-size: .72rem; color: #B9B9C2; }
+.cg { display: contents; }
+.cg-l { display: none; }
+.pill { position: absolute; left: var(--x); top: var(--y); z-index: 3; transform: translate(-50%, -50%); padding: .42rem .85rem; border-radius: 999px; border: 1px solid var(--rule-strong); background: #fff; color: var(--ink); font-size: .86rem; font-weight: 500; line-height: 1.2; white-space: nowrap; cursor: pointer; transition: background .25s, color .25s, border-color .25s, opacity .7s var(--ease), translate .9s var(--ease); }
+.cg[data-ring="1"] .pill { border-color: var(--ink); font-weight: 600; }
+.cg[data-ring="3"] .pill { color: var(--soft); border-color: var(--rule); }
+.pill.hu { border-color: var(--accent); color: var(--accent); }
+.pill:hover, .pill:focus-visible, .pill.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.pill.hu:hover, .pill.hu:focus-visible, .pill.hu.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.cloud-cap { margin: 1.4rem auto 0; max-width: 40rem; min-height: 3.2em; color: var(--soft); font-size: .98rem; line-height: 1.6; }
+.cloud-cap b { color: var(--ink); font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .cloud:not(.in) .pill { opacity: 0; translate: calc((50% - var(--x)) * .6) calc((50% - var(--y)) * .6); }
+  .cloud:not(.in) .cloud-core { opacity: 0; }
+  .cloud .cloud-core { transition: opacity .6s var(--ease); }
+  .cloud.in .pill { transition: background .25s, color .25s, border-color .25s, opacity .7s var(--ease) calc(var(--i) * 45ms), translate .9s var(--ease) calc(var(--i) * 45ms); animation: pillDrift var(--dur, 9s) ease-in-out calc(1s + var(--i) * 120ms) infinite alternate; }
+}
+@keyframes pillDrift { to { translate: var(--dx, 4px) var(--dy, -5px); } }
+@media (max-width: 760px) {
+  .idea-why, .idea-pr { grid-template-columns: 1fr; }
+  .idea-why li + li, .idea-pr li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); margin-top: 1rem; }
+  .idea-why li, .idea-pr li { padding-right: 0; }
+  .cloud-stage { aspect-ratio: auto; display: grid; gap: 1.4rem; justify-items: center; }
+  .cloud-rings { display: none; }
+  .cloud-core { position: static; transform: none; width: 7.5rem; height: 7.5rem; }
+  .cg { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  .cg-l { display: block; width: 100%; margin-bottom: .2rem; font-size: .75rem; font-weight: 600; color: var(--soft); }
+  .pill { position: static; transform: none; animation: none !important; translate: none !important; }
+}
+.ring-l { position: absolute; left: 50%; transform: translate(-50%, -50%); z-index: 1; padding: 0 .55rem; background: var(--tint); font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); white-space: nowrap; }
+.cloud-stage > .pill.hu { z-index: 3; }
+@media (max-width: 760px) { .ring-l { display: none; } .cloud-stage > .pill.hu { order: 0; } }
+.cg[data-ring="3"] .pill:hover, .cg[data-ring="3"] .pill:focus-visible, .cg[data-ring="3"] .pill.on { color: #fff; border-color: var(--ink); }
+.pf-tag { position: absolute; left: 50%; transform: translateX(-50%); top: clamp(8px, 1.2vw, 14px); z-index: 5; padding: .3rem .7rem; border-radius: 999px; background: rgba(255,255,255,.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(10,10,20,.12); font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); pointer-events: none; }
+.film-note { margin: 1rem auto 0; max-width: 40rem; text-align: center; color: var(--soft); font-size: .92rem; line-height: 1.55; }
+@media (max-width: 600px) { .pf-tag { font-size: .52rem; padding: .18rem .45rem; top: 6px; } }
+
 </style>
 <div class="prog" id="prog" aria-hidden="true"></div>
 <header class="bar">
@@ -1474,7 +1639,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
     <a class="id" href="#top"><span class="id-name">Anish Velayudhan Kutty</span><span class="id-role">Design &amp; Product Executive</span></a>
     <nav class="nav" aria-label="Primary">
       <span class="nav-links"><a href="#work" data-g="work">Work</a><a href="#leadership" data-g="lead">Leadership</a><a href="#about" data-g="about">About</a></span>
-      <a class="nav-cta" href="#connect">Let's connect <span class="ar">→</span></a>
+      <span class="nav-util"><a class="nav-cta" href="/documents/resume.pdf" download="Anish_Velayudhan_Kutty_Resume.pdf" aria-label="Download resume (PDF)">Resume <svg class="dl" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19h14"/></svg></a><a class="nav-li" href="https://www.linkedin.com/in/anishvelayudhankutty/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a></span>
     </nav>
   </div>
 </header>
@@ -1523,8 +1688,6 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
       <div><p class="fig">1 → 2</p><p class="cap">Designers. First 30 days solo.</p></div>
       <div><p class="fig">~6 months</p><p class="cap">Enterprise validation, then a global partner.</p></div>
     </div>
-    <div class="shot rv"><figure class="prodshot"><img src="/images/home/final/guided-planning.webp" width="2200" height="1103" alt="The guided planning experience: a submission plan shown as a timeline from start date to due date, with a &quot;you are here&quot; marker, followed by tabs for requirements, market rules, shared packs, bundling and capacity." loading="lazy" decoding="async"></figure></div>
-
     <div class="c">
     <div class="wtabs two-t rv" role="tablist" aria-label="Chapters of the flagship case" id="work-tabs">
       <button class="wtab" role="tab" id="t-productize" aria-controls="tp-productize" aria-selected="true" data-tab="productize" aria-label="Chapter 1: Productize. Make intelligence accessible"><span class="n" aria-hidden="true">1</span><b>Productize</b><span class="d">Make intelligence accessible</span></button>
@@ -1544,6 +1707,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
         <h3 class="st"><span>The technology was powerful.</span><span>Access to it wasn't.</span></h3>
         <p class="cp">A decade of enterprise data expertise had created sophisticated capabilities. But much of that intelligence remained trapped in terminal workflows, scripts and the minds of experienced engineers.</p>
       </div>
+      <div class="shot rv"><figure class="prodshot pf" role="img" aria-label="Product film: a healthcare data product built end to end. Source and profile clinical data, prepare and resolve patient records, compose a pipeline in the data factory, then ask an AI agent questions with traceable answers. All data is synthetic and patient identifiers are masked."><div class="pf-view"><div class="pf-stage"></div></div><div class="pf-ov" aria-hidden="true"><span class="pf-ov-n">01</span><span class="pf-ov-t"><b>From terminal to SaaS</b><span>A command-line engine reborn as a guided 7-step workflow</span></span></div><div class="pf-bar" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div><button class="pf-ctl" type="button" aria-pressed="false" aria-label="Pause product film"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor"/></svg></button></figure></div>
       <div class="stats">
         <div><p class="fig">~<span class="cu" data-to="50">50</span></p><p class="cap">Engineers in an engineering-heavy organization.</p></div>
         <div><p class="fig"><span class="cu" data-to="12">12</span>+ years</p><p class="cap">Enterprise data expertise.</p></div>
@@ -1568,16 +1732,6 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
       </div>
       <figure class="voice"><span class="voice-mark" aria-hidden="true">“</span><blockquote><p>I don't have to <em>depend on a data engineer</em> anymore. As a business guy, I exactly know my industry problem.</p></blockquote><figcaption>Business user · Enterprise customer</figcaption></figure>
       <p class="lit"><span class="lit-k">The real design problem</span>The technology wasn't what needed translating. The expert reasoning did.</p>
-      <div class="gal-wrap">
-        <p class="lbl">The work, screen by screen</p>
-        <div class="gal" tabindex="0" role="region" aria-label="Product screens. Scroll sideways.">
-          <figure><div class="ph " style="--ar:4/3" role="img" aria-label="Screen to add: Before: the terminal workflow"><span class="ph-in"><span class="ph-t">Screen to add</span><span class="ph-d">Before: the terminal workflow</span></span></div><figcaption><b>01</b> Before: scripts in a terminal</figcaption></figure>
-          <figure><div class="ph " style="--ar:4/3" role="img" aria-label="Screen to add: The blueprint: recurring expert patterns"><span class="ph-in"><span class="ph-t">Screen to add</span><span class="ph-d">The blueprint: recurring expert patterns</span></span></div><figcaption><b>02</b> The blueprint</figcaption></figure>
-          <figure><div class="ph " style="--ar:4/3" role="img" aria-label="Screen to add: v1.0: the guided workflow"><span class="ph-in"><span class="ph-t">Screen to add</span><span class="ph-d">v1.0: the guided workflow</span></span></div><figcaption><b>03</b> v1.0 guided workflow</figcaption></figure>
-          <figure><div class="ph " style="--ar:4/3" role="img" aria-label="Screen to add: An enterprise use case, validated"><span class="ph-in"><span class="ph-t">Screen to add</span><span class="ph-d">An enterprise use case, validated</span></span></div><figcaption><b>04</b> Validated with enterprise users</figcaption></figure>
-        </div>
-        <p class="gal-hint" aria-hidden="true">Scroll sideways <span>→</span></p>
-      </div>
 
       <div class="beats">
         <details class="beat-row" open>
@@ -1722,6 +1876,55 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
         <h3 class="st"><span>We had changed the interface.</span><span>Then the definition of an interface changed.</span></h3>
         <p class="cp">The first transformation moved complex work from terminal scripts into a guided product experience. But as AI accelerated, a new interaction model was emerging, one where users could express intent instead of navigating every step.</p>
       </div>
+      <section class="idea" aria-labelledby="idea-h">
+        <p class="lbl idea-k">The idea</p>
+        <h4 class="idea-h" id="idea-h"><span>Stop operating data.</span><span>State the outcome.</span></h4>
+        <ol class="idea-why">
+          <li><span class="iw-n">01</span><b>People were still doing the work.</b><span>Moving from scripts to screens removed the code, but people still watched dashboards, fixed failures and chased compliance.</span></li>
+          <li><span class="iw-n">02</span><b>Data outgrew the team.</b><span>Sources, volume and regulation grow faster than any team can review by hand.</span></li>
+          <li><span class="iw-n">03</span><b>Trust comes from proof.</b><span>Confidence in data comes from lineage, audit and explanation, not from effort.</span></li>
+        </ol>
+        <figure class="cloud" aria-label="Capabilities run by agents around a single human intent">
+          <div class="cloud-stage">
+            <svg class="cloud-rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="50" rx="17" ry="22"/><ellipse cx="50" cy="50" rx="29.5" ry="36"/><ellipse cx="50" cy="50" rx="41.5" ry="46"/></svg>
+            <span class="ring-l" style="top:28%" aria-hidden="true">Trust</span><span class="ring-l" style="top:14%" aria-hidden="true">Protection</span><span class="ring-l" style="top:4%" aria-hidden="true">Operations</span>
+            <div class="cloud-core"><b>Intent</b><span>one sentence from you</span></div>
+            <button type="button" class="pill hu" style="--x:50%;--y:67%;--i:0" data-agent="You" data-why="The rare decision that needs judgement arrives with the evidence, ready for one tap.">Human approval</button>
+            <div class="cg" data-ring="1"><p class="cg-l">Trust</p>
+              <button type="button" class="pill" data-agent="Steward" data-why="Every dataset has an owner and a contract it must keep.">Governance</button>
+              <button type="button" class="pill" data-agent="Cartographer" data-why="Any value can be traced back to its source in one step.">Lineage</button>
+              <button type="button" class="pill" data-agent="Auditor" data-why="Every action is logged, signed and replayable.">Audit</button>
+              <button type="button" class="pill" data-agent="Explainer" data-why="Every decision comes with its reason, in plain language.">Explainability</button>
+            </div>
+            <div class="cg" data-ring="2"><p class="cg-l">Protection</p>
+              <button type="button" class="pill" data-agent="Steward" data-why="Least-privilege access: people and agents see only what their role needs, and every grant expires.">Roles &amp; permissions</button>
+              <button type="button" class="pill" data-agent="Guardian" data-why="Data is encrypted at rest and in transit between systems, and decrypted only where a policy allows. Keys rotate automatically.">Encryption in motion</button>
+              <button type="button" class="pill" data-agent="Guardian" data-why="Identifiers are detected and masked before anyone can see them.">PII &amp; masking</button>
+              <button type="button" class="pill" data-agent="Counsel" data-why="Regulations become enforced policies, re-checked continuously.">HIPAA · GDPR</button>
+              <button type="button" class="pill" data-agent="Counsel" data-why="Requests to be forgotten are traced across every system and completed with proof.">Consent &amp; erasure</button>
+            </div>
+            <div class="cg" data-ring="3"><p class="cg-l">Operations</p>
+              <button type="button" class="pill" data-agent="Custodian" data-why="Data moves between systems on schedule, encrypted end to end, with every hop recorded.">Data movement</button>
+              <button type="button" class="pill" data-agent="Tagger" data-why="New fields are classified the moment they appear.">Auto-tagging</button>
+              <button type="button" class="pill" data-agent="Scrubber" data-why="Formats are standardised and duplicates removed, without a ticket.">Cleaners</button>
+              <button type="button" class="pill" data-agent="Cartographer" data-why="Patients, providers and payers stay connected across every source.">Knowledge graph</button>
+              <button type="button" class="pill" data-agent="Custodian" data-why="Data is tiered by how it is used, so cost tracks value.">Storage &amp; cost</button>
+              <button type="button" class="pill" data-agent="Watcher" data-why="Freshness, drift and SLAs are watched around the clock.">Observability</button>
+              <button type="button" class="pill" data-agent="Medic" data-why="Failures are retried, repaired or rolled back automatically.">Self-healing</button>
+              <button type="button" class="pill" data-agent="Herald" data-why="People hear about problems before they become problems.">Proactive alerts</button>
+            </div>
+          </div>
+          <figcaption class="cloud-cap" aria-live="polite"><b>Agents run every layer.</b> <span>Hover or tap a capability to see why it matters.</span></figcaption>
+        </figure>
+        <ol class="idea-pr" aria-label="Design principles">
+          <li><span class="iw-n">A</span><b>Intent over instruction</b><span>You state outcomes, not steps.</span></li>
+          <li><span class="iw-n">B</span><b>Quiet by default</b><span>Silence means healthy. Only exceptions surface.</span></li>
+          <li><span class="iw-n">C</span><b>Human for the rare decision</b><span>One tap, with the evidence already gathered.</span></li>
+          <li><span class="iw-n">D</span><b>Proof, not promises</b><span>Every action is explainable, traceable and reversible.</span></li>
+        </ol>
+      </section>
+      <div class="shot rv"><figure class="prodshot pf pf2" role="img" aria-label="Concept film: an autonomous data platform. One sentence of intent becomes a plan, twelve specialist agents run governance, privacy, compliance, lineage, storage and observability overnight, a single human approval is requested, every decision is explainable, a morning brief summarises the night, and the same update and approval reach a phone and a smartwatch. All data is synthetic and identifiers are masked."><span class="pf-tag">Concept direction</span><div class="pf-view"><div class="pf-stage"></div></div><div class="pf-ov" aria-hidden="true"><span class="pf-ov-n">01</span><span class="pf-ov-t"><b>State the intent</b><span>One sentence becomes a living plan run by agents</span></span></div><div class="pf-bar" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div><button class="pf-ctl" type="button" aria-pressed="false" aria-label="Pause concept film"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor"/></svg></button></figure></div>
+      <p class="film-note">Agentic chat shipped as v1. Autonomous operations is the direction we&rsquo;re building toward, and it keeps evolving as we learn what customers will trust agents to do.</p>
       <ol class="eras" aria-label="How people work with software: script, then interface, now intent">
         <li class="era"><span class="era-k">Then</span><span class="era-dot" aria-hidden="true"></span><b>Script</b><span class="era-d">Tell the machine how.</span></li>
         <li class="era"><span class="era-k">Then</span><span class="era-dot" aria-hidden="true"></span><b>Interface</b><span class="era-d">Navigate the workflow.</span></li>
@@ -1853,7 +2056,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
       <article class="irow rv">
         <div class="ileft">
           <p class="ibig word">8 clients</p>
-          <p class="icap">Across the US, Australia, Spain, Italy and Germany.</p>
+          <p class="icap">Across the US, London, Australia, Spain, Italy and Germany.</p>
         </div>
         <div class="iright">
           <p class="lbl">01 · Global scale · Two global pharmaceutical platforms</p>
@@ -1861,15 +2064,11 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
           <p>Two platforms, one challenge: helping a global pharmaceutical ecosystem work as one.</p>
           <p>The first brought fragmented regulatory workflows into a coherent platform, and later supported critical workflows associated with the COVID-19 vaccine program, when speed, rigor and global coordination mattered at an unprecedented scale.</p>
           <p>The second, an intelligent content platform, helped teams across the drug lifecycle plan, create and adapt compliant content across channels and languages.</p>
-          <p class="chain">Connected siloed systems → saved time → reduced expert dependence → adopted by ~8 pharma clients across 5 countries</p>
+          <p class="chain">Connected siloed systems → saved time → reduced expert dependence → adopted by ~8 pharma clients across 6 countries</p>
           <p class="istate"><span>The patterns surfaced early became the foundation for AI enablement.</span> <span>Early adopters didn't start their transformation from zero.</span></p>
           <p class="iai">The foundations outlasted my time there. After I moved on, they became the basis for a <b>$75M multi-year AI proposal</b>.</p>
           <p class="role">My role · Director of UX</p>
         </div>
-              <figure class="irow-fig">
-          <div class="ph big" style="--ar:16/7" role="img" aria-label="Image to add: Platform at global scale: a de-identified screen or a map of regions served"><span class="ph-in"><span class="ph-t">Image to add</span><span class="ph-d">Platform at global scale: a de-identified screen or a map of regions served</span></span></div>
-          <figcaption>What the platform looked like at global scale.</figcaption>
-        </figure>
       </article>
       <article class="irow rv">
         <div class="ileft">
@@ -1883,10 +2082,6 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
           <p class="chain">Short-term engagement → multi-million follow-ons, signed → Big Four tax partnership → 300 partners at scale</p>
           <p class="role">My role · Director of Product and Design. Led design from day one, from a solo first month through enterprise validation.</p>
         </div>
-              <figure class="irow-fig">
-          <div class="ph big" style="--ar:16/7" role="img" aria-label="Image to add: Business leaders working directly with the product: a de-identified screen or workshop moment"><span class="ph-in"><span class="ph-t">Image to add</span><span class="ph-d">Business leaders working directly with the product: a de-identified screen or workshop moment</span></span></div>
-          <figcaption>The product, read directly by business leaders.</figcaption>
-        </figure>
       </article>
       <article class="irow rv">
         <div class="ileft">
@@ -1900,10 +2095,6 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
           <p class="chain">Deliver → earn trust → invited upstream → shape proposition → influence growth</p>
           <p class="role">My role · Director of UX</p>
         </div>
-              <figure class="irow-fig">
-          <div class="ph big" style="--ar:16/7" role="img" aria-label="Image to add: Design in the room upstream: a workshop, proposition or RFP moment"><span class="ph-in"><span class="ph-t">Image to add</span><span class="ph-d">Design in the room upstream: a workshop, proposition or RFP moment</span></span></div>
-          <figcaption>Design shaping the proposition, before the deal.</figcaption>
-        </figure>
       </article>
     </div>
 
@@ -2079,7 +2270,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
             <p class="vf-punch">These traits in one person: Anish.</p>
           </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-01.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Adam Egger</b><span>21 years at Software AG &middot; Advisor to B2B software CEOs</span><span class="v-ctx">Senior colleague at Software AG &middot; 2019</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-01.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Adam Egger</b><span>21 years at Software AG &middot; Advisor to B2B software CEOs</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;One of the best in the industry to drive User Experience for products - his impeccable focus on purpose, process &amp; quality always results in Best in class outcomes.&rdquo;</p>
@@ -2092,7 +2283,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>During my 2 years of working relationship, I am glad that we developed a great professional bonding and more importantly found a ‘true’ friend !! My best to him always and wish that he continues to do exceptional things in his career!</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-02.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Dinesh Kumar</b><span>Chief Operating Officer, WiseEngage</span><span class="v-ctx">Worked together on the same team &middot; 2024</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-02.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Dinesh Kumar</b><span>Chief Operating Officer, WiseEngage</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;His products and standards are still used to this day as a basis to make many decisions.&rdquo;</p>
@@ -2103,7 +2294,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>It was a delight to work with a creative person like Anish.</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-03.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Karthikeyan Kumaraguru</b><span>ML Platforms &amp; Conversational AI, Samsung</span><span class="v-ctx">Senior colleague &middot; 2020</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-03.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Karthikeyan Kumaraguru</b><span>ML Platforms &amp; Conversational AI, Samsung</span></span></footer>
           </article>
         </div>
         <div class="rgrid" id="v1" hidden>
@@ -2115,7 +2306,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>If you are creating a product, brain storming a new idea,  ensure you start with him!</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-04.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Prasanna Bableshwar</b><span>Technology Leader &middot; Cloud, Automation &amp; AI-driven hiring</span><span class="v-ctx">Worked together on the same team &middot; 2021</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-04.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Prasanna Bableshwar</b><span>Technology Leader &middot; Cloud, Automation &amp; AI-driven hiring</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;He is exceptionally good at interacting with people and he has exemplary skill to influence peers as well as seniors effectively.&rdquo;</p>
@@ -2124,7 +2315,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>Smart, innovative and a champion of creative thinking are the attributes defines Anish. He is a very committed and hardworking person who spends time understanding the issues and thinking through solutions. He is exceptionally good at interacting with people and he has exemplary skill to influence peers as well as seniors effectively. His knowledge of design and aligning them to the people’s choice is something that anyone can admire. He differs from other people with his in-depth practical knowledge of possible outcomes. I have always seen him as a go-to person to discuss work, in most cases, he always had instant answers and ideas and doing it with ease. He keeps himself updated on the latest trend of work, and always come up with out of box solutions. He always makes you to think differently and provides a different dimension. He is one of the smart colleagues to have in our team. His multitasking ability was unlike I have seen before and made an applause-worthy increase in our company’s growth level. His work ethics is immaculate, and he goes out of his way when you ask for some help and guidance. He is great leader who leads by example. He is TedEx speaker, always conveys the message very accurately, and precisely. He is exceedingly a rare gem to be found and will be a great asset to any organization.</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-05.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Antony Prabhu J</b><span>Head, AI Product Management &middot; Life Sciences Strategy &amp; Consulting</span><span class="v-ctx">Worked together on the same team &middot; 2021</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-05.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Antony Prabhu J</b><span>Head, AI Product Management &middot; Life Sciences Strategy &amp; Consulting</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;His ability to cut through the clutter and take control to provide simple and effective solution, and driving consensus within the team, makes him a “go to person”.&rdquo;</p>
@@ -2135,7 +2326,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>Anish is a very passionate teacher and mentor willing to share his vast knowledge with everyone, irrespective of their age/ hierarchy. I have learnt a great deal from him. He is versatile and talented- I have seen his wonderful paintings and photography.</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-06.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Bhuma V</b><span>Director, Scientific Research &amp; Analytics, Indegene</span><span class="v-ctx">Worked together across teams &middot; 2020</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-06.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Bhuma V</b><span>Director, Scientific Research &amp; Analytics, Indegene</span></span></footer>
           </article>
         </div>
         <div class="rgrid" id="v2" hidden>
@@ -2148,7 +2339,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>All in all, Anish is a rare leader who balances vision with execution, empathy with accountability, and strategic thinking with hands-on involvement. His ability to create an environment where people feel both challenged and supported makes him a key enabler of meaningful results and genuine team growth. Any team or organization would be fortunate to have him.</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-07.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Dimitrios Chavouzis</b><span>Head of AI Engagements, Pareto.ai</span><span class="v-ctx">Reported to me directly &middot; 2025</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-07.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Dimitrios Chavouzis</b><span>Head of AI Engagements, Pareto.ai</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;What truly sets him apart is his remarkable ability to blend technical excellence with genuine compassion for his colleagues without assuming any sense of hierarchy.&rdquo;</p>
@@ -2162,7 +2353,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>I truly wish him the best of everything in life.</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-08.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Himangi Ahuja</b><span>Marketing &amp; Communications, IIM Lucknow</span><span class="v-ctx">I was her senior leader and buddy &middot; 2024</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-08.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Himangi Ahuja</b><span>Marketing &amp; Communications, IIM Lucknow</span></span></footer>
           </article>
           <article class="rc">
             <p class="rc-q">&ldquo;He is an empathetic and supportive leader who helped me in discovering and embracing my strengths.&rdquo;</p>
@@ -2173,7 +2364,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
               <p>Would love to work with Anish again if our paths were to cross! Thank you for all the support Anish :)</p>
             </div>
             </details>
-            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-09.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Madhulika Yayavaram</b><span>Product Designer</span><span class="v-ctx">Worked together &middot; 2022</span></span></footer>
+            <footer class="rc-who"><img class="v-av" src="/images/home/final/recommendation-09.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><span class="v-who"><b>Madhulika Yayavaram</b><span>Product Designer</span></span></footer>
           </article>
         </div>
       </div>
@@ -2225,7 +2416,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
     <p class="grp rv"><span class="grp-t">Conversation</span><span class="grp-n" aria-label="Section 8 of 8"><b>08</b> / 08</span></p>
     <h2 class="talk rv" style="margin-top:1.25rem">Great products are rarely built alone.</h2>
     <div class="h1-wrap ask-wrap"><h2 class="talk ask pt" id="ask">Let&rsquo;s build the next one together.</h2><canvas class="pfc" aria-hidden="true"></canvas></div>
-    <div class="talk-actions rv"><span class="btn static">Schedule a conversation <span class="ar">→</span></span><a class="alt" href="https://www.linkedin.com/in/anishvelayudhankutty/" target="_blank" rel="noopener">LinkedIn</a><a class="alt" href="mailto:anishv.info@gmail.com">Email</a></div>
+    <p class="talk-line rv">Write to <a href="mailto:info@anishkutty.com">info@anishkutty.com</a> or call <a href="tel:+19808601544">+1&nbsp;980&nbsp;860&nbsp;1544</a>.</p>
   </div>
 </section>
 
@@ -2279,7 +2470,7 @@ html.js .twin-fab.on.at-foot { opacity: 0; transform: translateY(14px); pointer-
 
 
 <footer class="foot"><div class="wrap foot-in">
-  <span class="foot-note">© 2026 Anish Velayudhan Kutty · Dashed and dotted frames mark material still to be added.</span>
+  <span class="foot-note">© 2026 Anish Velayudhan Kutty</span>
 </div></footer>`,
 } as const;
 

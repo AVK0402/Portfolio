@@ -1,5 +1,27 @@
 # Folder Structure
 
+## Transform capability system — 2026-10-18
+
+No file or folder was added. Transform markup and scoped styles remain in
+`content/home.ts`; its native interactions extend the existing
+`public/scripts/home-final.js` runtime. The concept film is generated from trusted CSS,
+SVG and DOM fragments and reuses the existing Productize film font files, so no
+Transform-specific media directory is required.
+
+## Productize product film — 2026-10-18
+
+No route or component folder was added. Productize markup and scoped styles remain in
+`content/home.ts`, while its existing homepage runtime is extended in
+`public/scripts/home-final.js`. Exact decoded reference assets live at
+`public/images/home/final/product-film/plate-{00..11}.webp`; the four supplied font
+weights live at `public/fonts/home/product-film/lato-{400,500,600,700}.woff2`.
+
+## Updated homepage header — 2026-10-18
+
+No folder or route was added. The verified two-page resume from the approved standalone
+source replaced the placeholder at `public/documents/resume.pdf`; the header markup and
+styles remain in `content/home.ts`, and the existing critical-flow test was updated.
+
 ## Portable private-access engine — 2026-10-15
 
 Added `src/proxy.ts`; `src/lib/access/{config,password,request,session}.ts`;

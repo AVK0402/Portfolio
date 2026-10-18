@@ -1,5 +1,39 @@
 # Design System
 
+## Impact editorial alignment — 2026-10-18
+
+The homepage Impact chapter now matches the final supplied editorial layout: its three
+stories remain text-led two-column rows with no placeholder image fields. The existing
+metric strip, typography, dividers, spacing, responsive collapse and pattern summary
+are unchanged; no token or new visual pattern was introduced.
+
+## Transform capability system — 2026-10-18
+
+The supplied Transform visual system adds a centered idea statement, three-column
+rationale, concentric capability cloud, four-column principles and a concept-film
+surface. Desktop shows eighteen capability pills across Trust, Protection and
+Operations rings around one Intent core; mobile converts the rings into labeled,
+wrapping groups. The film reuses the 1920 × 992 responsive surface and existing PFLato
+film typography. At 1440px it renders at 1024 × 529px; at 375px it renders at
+343 × 177px without horizontal overflow.
+
+## Productize product film — 2026-10-18
+
+The approved Productize film uses its original 1920 × 992 artboard, scaled through a
+single responsive `aspect-ratio` surface. Its product UI, terminal, overlays, progress
+track and circular transport control preserve the supplied geometry and colors. The
+film-only PFLato family is self-hosted and scoped to `.pf-stage`; the surrounding
+homepage keeps Hanken Grotesk and all existing section tokens. At 1440px the film is
+1024 × 529px; at 375px it is 343 × 177px with no horizontal overflow.
+
+## Updated homepage header — 2026-10-18
+
+The homepage header now matches the supplied utility treatment: the existing quiet
+text-link styling is reused for Resume, with the supplied 15px download SVG and 18px
+LinkedIn SVG. Both use the established ink, accent focus outline, spacing, hover
+opacity and sticky responsive header rules. Desktop and 375px layouts have no
+horizontal overflow.
+
 ## Portable private-access engine — 2026-10-15
 
 The new `/access` screen is intentionally restrained and consistent with the final

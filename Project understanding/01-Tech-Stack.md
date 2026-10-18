@@ -1,5 +1,21 @@
 # Tech Stack
 
+## Transform capability system — 2026-10-18
+
+The homepage Transform chapter now uses the supplied capability cloud and nine-scene
+concept film through the existing trusted markup and homepage runtime. Native DOM,
+Web Animations, IntersectionObserver, Page Visibility and reduced-motion media queries
+provide the behavior. It reuses the Productize film's self-hosted PFLato faces and adds
+no package, framework, font or image asset.
+
+## Productize product film — 2026-10-18
+
+The homepage Productize chapter now runs the supplied product-film sequence with the
+existing trusted HTML/CSS and client-runtime boundary. It uses native DOM, Web
+Animations, IntersectionObserver, Page Visibility and `prefers-reduced-motion`; no
+package, framework or version changed. The supplied Lato film faces are self-hosted as
+WOFF2 files and its twelve visual plates are local WebP assets.
+
 ## Non-expiring portfolio access — 2026-10-18
 
 Access grants now support an explicit `expiresAt: null` mode for a password that

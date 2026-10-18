@@ -1,5 +1,33 @@
 # Animations and Interactions
 
+## Transform capability system — 2026-10-18
+
+Capability pills drift subtly after a one-time viewport entrance on motion-enabled
+devices. Hover, focus or click selects a capability and updates an `aria-live` caption
+with its responsible agent and purpose; mobile tap can also clear the selection. The
+concept film runs nine supplied scenes across four phases, supports pause/resume, pauses
+outside the viewport or while the page is hidden, and guards against duplicate setup.
+Reduced-motion users receive a stable first scene, no pill drift and a hidden transport
+control. Generated screen-fragment images are decorative because each film figure owns
+the complete accessible narrative label.
+
+## Productize product film — 2026-10-18
+
+Productize now plays the supplied one-pass scene sequence across twelve local plates
+and a closing terminal state. Its progress track follows scene timing; the transport
+button pauses and resumes the active animation with an updated accessible label. The
+film pauses outside the viewport or while the page is hidden, resumes only when both
+conditions allow it, and guards against duplicate initialization during React Strict
+Mode development. Reduced-motion users receive one stable representative frame and a
+hidden transport control. No loop or new animation dependency was introduced.
+
+## Updated homepage header — 2026-10-18
+
+Resume uses the browser's native `download` behavior for the protected local PDF;
+LinkedIn opens in a new tab with an explicit accessible label. The download icon moves
+down 2px on hover, matching the supplied source, and both utilities retain visible
+keyboard focus. No embedded-PDF decoder, download shim or dependency was introduced.
+
 ## Non-expiring portfolio access — 2026-10-18
 
 An explicitly non-expiring password can be reused until its grant is manually revoked.
