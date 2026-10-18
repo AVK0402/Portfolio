@@ -297,7 +297,7 @@ section[id] { scroll-margin-top: 5rem; }
 .chain { margin-top: .9rem; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--ink); line-height: 1.5; }
 .pattern { margin: clamp(2.5rem, 5vw, 3.5rem) auto 0; max-width: 900px; }
 .pattern-lead { max-width: 34rem; margin: 0 auto; font-weight: 600; font-size: clamp(1.2rem, 2.2vw, 1.6rem); line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
-.pattern-cols { margin-top: 1.75rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.pattern-cols { margin-top: clamp(2.75rem, 5vw, 3.75rem); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
 .pattern-cols .domain { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); font-weight: 600; }
 .pattern-cols .verb { margin-top: .2rem; font-weight: 600; font-size: clamp(1.6rem, 3.2vw, 2.4rem); letter-spacing: -.035em; line-height: 1.1; color: var(--accent); }
 .pattern-cols .gloss { margin-top: .2rem; color: var(--soft); font-size: .93rem; }
