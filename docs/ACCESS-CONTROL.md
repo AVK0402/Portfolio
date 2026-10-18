@@ -6,7 +6,8 @@ environment values. Passwords are never stored in source code or sent to the bro
 
 ## What it provides
 
-- One independently expiring password per interviewer or hiring process.
+- Independently expiring passwords, plus explicit non-expiring passwords that remain
+  valid until revoked.
 - Optional future start time for each invitation.
 - Signed, HTTP-only sessions capped at 12 hours or the invitation expiry, whichever
   comes first.
@@ -25,6 +26,17 @@ timezone is accepted.
 ```bash
 pnpm access:create -- --label "Company / role" --expires "2026-11-01T18:30:00+05:30"
 ```
+
+For a password that remains valid until you revoke it, use the explicit no-expiry
+option:
+
+```bash
+pnpm access:create -- --label "Portfolio access" --no-expiry
+```
+
+Non-expiring grants store `"expiresAt": null`. Omitting `expiresAt` is invalid and
+keeps the site fail-closed, preventing an accidental typo from granting permanent
+access.
 
 The command prints:
 
@@ -57,8 +69,8 @@ host supplies the new value to the running process.
 
 ## Revoke access
 
-- One interviewer: remove that invitation object from `PORTFOLIO_ACCESS_GRANTS`, then
-  publish/restart.
+- One interviewer or a non-expiring password: remove that invitation object from
+  `PORTFOLIO_ACCESS_GRANTS`, then publish/restart.
 - Everyone immediately: increment `PORTFOLIO_ACCESS_VERSION`, then publish/restart.
 - Emergency rotation: replace `PORTFOLIO_SESSION_SECRET`; this invalidates every session.
 

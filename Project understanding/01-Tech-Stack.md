@@ -1,5 +1,13 @@
 # Tech Stack
 
+## Non-expiring portfolio access — 2026-10-18
+
+Access grants now support an explicit `expiresAt: null` mode for a password that
+remains valid until manually revoked. Dated grants retain their existing start/end
+validation and behavior. Signed browser sessions remain short-lived (12 hours by
+default, configurable from 1–24 hours), so a permanent password does not create a
+permanent browser session. No dependency or runtime changed.
+
 ## Portable private-access engine — 2026-10-15
 
 The portfolio now has a provider-independent server access layer using the existing

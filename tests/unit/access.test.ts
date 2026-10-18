@@ -24,6 +24,12 @@ const TEST_GRANTS = JSON.stringify([
 ]);
 const NOW = Date.parse("2026-10-15T12:00:00.000Z");
 
+function grantsWithExpiry(expiresAt: string | null) {
+  const grants = JSON.parse(TEST_GRANTS) as Array<Record<string, unknown>>;
+  grants[0]!.expiresAt = expiresAt;
+  return JSON.stringify(grants);
+}
+
 function readyConfig() {
   const result = readAccessConfig({
     PORTFOLIO_ACCESS_GRANTS: TEST_GRANTS,
@@ -52,6 +58,30 @@ describe("portfolio access configuration", () => {
     expect(getActiveGrants(config, Date.parse("2028-01-01T00:00:00Z"))).toHaveLength(0);
   });
 
+  it("keeps explicitly non-expiring invitations active until revoked", () => {
+    const result = readAccessConfig({
+      PORTFOLIO_ACCESS_GRANTS: grantsWithExpiry(null),
+      PORTFOLIO_SESSION_SECRET: TEST_SECRET,
+    });
+    if (result.status !== "ready") throw new Error("Expected ready access config");
+
+    expect(
+      getActiveGrants(result.config, Date.parse("2099-01-01T00:00:00Z")),
+    ).toHaveLength(1);
+  });
+
+  it("does not treat a missing expiry as non-expiring access", () => {
+    const grants = JSON.parse(TEST_GRANTS) as Array<Record<string, unknown>>;
+    delete grants[0]!.expiresAt;
+
+    expect(
+      readAccessConfig({
+        PORTFOLIO_ACCESS_GRANTS: JSON.stringify(grants),
+        PORTFOLIO_SESSION_SECRET: TEST_SECRET,
+      }).status,
+    ).toBe("unconfigured");
+  });
+
   it("matches the generated password hash without storing the password", async () => {
     const grants = getActiveGrants(readyConfig(), NOW);
     await expect(findMatchingGrant(TEST_PASSWORD, grants)).resolves.toMatchObject({
@@ -71,6 +101,30 @@ describe("portfolio sessions", () => {
     expect(verifySession(session.token, config, NOW + 1)).toMatchObject({
       grantId: grant.id,
     });
+  });
+
+  it("keeps browser sessions short-lived for a non-expiring invitation", () => {
+    const result = readAccessConfig({
+      PORTFOLIO_ACCESS_GRANTS: grantsWithExpiry(null),
+      PORTFOLIO_SESSION_SECRET: TEST_SECRET,
+    });
+    if (result.status !== "ready") throw new Error("Expected ready access config");
+
+    const session = issueSession(result.config.grants[0]!, result.config, NOW);
+    expect(session.expiresAt).toBe(NOW + 12 * 60 * 60 * 1000);
+    expect(verifySession(session.token, result.config, NOW + 1)).not.toBeNull();
+  });
+
+  it("still caps a session to a dated invitation expiry", () => {
+    const expiresAt = new Date(NOW + 60 * 60 * 1000).toISOString();
+    const result = readAccessConfig({
+      PORTFOLIO_ACCESS_GRANTS: grantsWithExpiry(expiresAt),
+      PORTFOLIO_SESSION_SECRET: TEST_SECRET,
+    });
+    if (result.status !== "ready") throw new Error("Expected ready access config");
+
+    const session = issueSession(result.config.grants[0]!, result.config, NOW);
+    expect(session.expiresAt).toBe(Date.parse(expiresAt));
   });
 
   it("rejects tampering, expiry, individual revocation and version revocation", () => {

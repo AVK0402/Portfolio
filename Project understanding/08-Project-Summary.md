@@ -1,5 +1,12 @@
 # Project Summary
 
+## Non-expiring portfolio access — 2026-10-18
+
+The existing portfolio password can now remain valid until manually revoked, without
+removing the dated invitation workflow. New grants choose either a real end date or the
+explicit `--no-expiry` option. Browser sessions remain limited to 12 hours by default,
+and individual, global-version and signing-key revocation continue to work.
+
 ## Portable private-access engine — 2026-10-15
 
 The complete existing portfolio is now protected by a built-in, host-neutral invitation

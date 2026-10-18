@@ -1,5 +1,15 @@
 # Risks and Constraints
 
+## Non-expiring portfolio access — 2026-10-18
+
+- A non-expiring password increases the impact of disclosure because it remains usable
+  until the grant is removed. Rotate or revoke it if it is shared beyond the intended
+  audience.
+- Browser sessions still expire and remain independently revocable; `expiresAt: null`
+  applies only to the password grant.
+- Non-expiring access must be explicit. Missing or malformed `expiresAt` values remain
+  invalid and fail closed.
+
 ## Portable private-access engine — 2026-10-15
 
 - The deployed gate cannot hide content in a public source repository. The GitHub

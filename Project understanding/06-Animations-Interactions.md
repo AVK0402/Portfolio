@@ -1,5 +1,13 @@
 # Animations and Interactions
 
+## Non-expiring portfolio access — 2026-10-18
+
+An explicitly non-expiring password can be reused until its grant is manually revoked.
+Each successful login still creates a finite signed browser session (12 hours by
+default), after which the same password must be entered again. Dated invitation expiry,
+individual grant removal, global version revocation and signing-key rotation continue
+to invalidate access as before.
+
 ## Portable private-access engine — 2026-10-15
 
 Anonymous navigation is intercepted before page or protected-asset delivery and sent

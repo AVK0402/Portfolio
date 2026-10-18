@@ -23,11 +23,15 @@ export function issueSession(
   config: AccessConfig,
   now = Date.now(),
 ) {
+  const sessionExpiresAt = now + config.sessionDurationMs;
   const payload: SessionPayload = {
     grantId: grant.id,
     version: config.sessionVersion,
     issuedAt: now,
-    expiresAt: Math.min(now + config.sessionDurationMs, grant.expiresAt),
+    expiresAt:
+      grant.expiresAt === null
+        ? sessionExpiresAt
+        : Math.min(sessionExpiresAt, grant.expiresAt),
   };
   const encodedPayload = Buffer.from(JSON.stringify(payload)).toString("base64url");
   return {
@@ -71,8 +75,8 @@ export function verifySession(
       !grant ||
       payload.issuedAt! < grant.notBefore ||
       now < grant.notBefore ||
-      now >= grant.expiresAt ||
-      payload.expiresAt! > grant.expiresAt
+      (grant.expiresAt !== null && now >= grant.expiresAt) ||
+      (grant.expiresAt !== null && payload.expiresAt! > grant.expiresAt)
     ) {
       return null;
     }

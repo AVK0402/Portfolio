@@ -1,5 +1,13 @@
 # Architecture
 
+## Non-expiring portfolio access — 2026-10-18
+
+The grant schema accepts `expiresAt: null` only when non-expiring access is intentional;
+an omitted or malformed expiry still fails closed. Active-grant and signed-session
+verification preserve the existing end-date checks for dated grants, while non-expiring
+grants remain valid until removed. Session cookies still receive the configured finite
+expiry, and the existing version/secret revocation paths are unchanged.
+
 ## Portable private-access engine — 2026-10-15
 
 `src/proxy.ts` is now the request boundary for the portfolio, public media, downloads,

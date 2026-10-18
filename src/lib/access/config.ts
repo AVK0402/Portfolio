@@ -10,7 +10,7 @@ export type AccessGrant = {
   salt: string;
   hash: string;
   notBefore: number;
-  expiresAt: number;
+  expiresAt: number | null;
 };
 
 export type AccessConfig = {
@@ -48,7 +48,8 @@ function parseGrant(value: unknown): AccessGrant | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const grant = value as Record<string, unknown>;
   const notBefore = Date.parse(String(grant.notBefore ?? ""));
-  const expiresAt = Date.parse(String(grant.expiresAt ?? ""));
+  const expiresAt =
+    grant.expiresAt === null ? null : Date.parse(String(grant.expiresAt ?? ""));
   const salt = typeof grant.salt === "string" ? grant.salt : "";
   const hash = typeof grant.hash === "string" ? grant.hash : "";
 
@@ -61,8 +62,8 @@ function parseGrant(value: unknown): AccessGrant | null {
     !decodeBase64Url(salt, SALT_BYTES) ||
     !decodeBase64Url(hash, HASH_BYTES) ||
     !Number.isFinite(notBefore) ||
-    !Number.isFinite(expiresAt) ||
-    notBefore >= expiresAt
+    (expiresAt !== null && !Number.isFinite(expiresAt)) ||
+    (expiresAt !== null && notBefore >= expiresAt)
   ) {
     return null;
   }
@@ -131,6 +132,7 @@ export function readAccessConfig(
 
 export function getActiveGrants(config: AccessConfig, now = Date.now()) {
   return config.grants.filter(
-    ({ notBefore, expiresAt }) => now >= notBefore && now < expiresAt,
+    ({ notBefore, expiresAt }) =>
+      now >= notBefore && (expiresAt === null || now < expiresAt),
   );
 }
