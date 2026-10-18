@@ -44,8 +44,8 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
             A considered body of work, shared with care.
           </h1>
           <p className={styles.intro}>
-            Enter the access password included with your invitation. Access is
-            time-limited and expires automatically.
+            Enter the access password included with your invitation. For your security,
+            each browser session expires automatically.
           </p>
 
           {canSignIn ? (
