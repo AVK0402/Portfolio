@@ -18,18 +18,19 @@ test.describe("Critical flows", () => {
       ["About", "about"],
     ]) {
       await page.goto("/");
-      await page
+      const link = page
         .getByRole("navigation", { name: "Primary" })
-        .getByRole("link", { name: label, exact: true })
-        .click();
+        .getByRole("link", { name: label, exact: true });
+      await link.click();
       await expect(page).toHaveURL(new RegExp(`/#${target}$`));
       await expect(page.locator(`#${target}`)).toBeInViewport();
+      await expect(link).toHaveClass(/\bon\b/);
     }
   });
 
   test("homepage narrative CTA reaches the featured work chapter", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Read the work ↓" }).click();
+    await page.getByRole("link", { name: "Read the work" }).click();
     await expect(page).toHaveURL(/\/#work$/);
     await expect(page.locator("#work")).toBeInViewport();
   });
@@ -99,5 +100,12 @@ test.describe("Critical flows", () => {
       "https://www.linkedin.com/in/anishvelayudhankutty/",
     );
     await expect(linkedin).toHaveAttribute("target", "_blank");
+
+    const aboutResume = page.getByRole("link", { name: "Download résumé ↘" });
+    await expect(aboutResume).toHaveAttribute("href", "/documents/resume.pdf");
+    await expect(aboutResume).toHaveAttribute(
+      "download",
+      "Anish_Velayudhan_Kutty_Resume.pdf",
+    );
   });
 });

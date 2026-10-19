@@ -1,5 +1,14 @@
 # Animations and Interactions
 
+## Text-only CTA hover language — 2026-10-19
+
+Pointer hover feedback across homepage and access-gate actions is intentionally
+limited to a 250ms text-color contrast shift. Inactive light-gray labels darken;
+dark labels soften; white text on filled dark actions moves to an accessible light
+gray. Hover no longer introduces a fill, lift, arrow movement, border emphasis or
+opacity fade. Active/selected fills, native semantics, visible focus outlines and
+reduced-motion behavior are preserved.
+
 ## Transform capability system — 2026-10-18
 
 Capability pills drift subtly after a one-time viewport entrance on motion-enabled
@@ -24,9 +33,10 @@ hidden transport control. No loop or new animation dependency was introduced.
 ## Updated homepage header — 2026-10-18
 
 Resume uses the browser's native `download` behavior for the protected local PDF;
-LinkedIn opens in a new tab with an explicit accessible label. The download icon moves
-down 2px on hover, matching the supplied source, and both utilities retain visible
-keyboard focus. No embedded-PDF decoder, download shim or dependency was introduced.
+LinkedIn opens in a new tab with an explicit accessible label. Both utilities now use
+the shared text-contrast hover treatment without moving the download icon, and retain
+visible keyboard focus. No embedded-PDF decoder, download shim or dependency was
+introduced.
 
 ## Non-expiring portfolio access — 2026-10-18
 

@@ -1,5 +1,14 @@
 # Design System
 
+## Text-only CTA hover language — 2026-10-19
+
+Homepage and access-gate calls to action now use text contrast as their hover signal:
+soft-gray labels become near-black, while near-black or white-on-dark actions move to
+their corresponding muted foreground. Hover does not add or swap a fill, move the
+control, or change its border treatment. Selected tabs and pressed controls retain
+their authored fills so state remains unambiguous; keyboard focus outlines are also
+unchanged.
+
 ## Impact editorial alignment — 2026-10-18
 
 The homepage Impact chapter now matches the final supplied editorial layout: its three
@@ -30,8 +39,8 @@ homepage keeps Hanken Grotesk and all existing section tokens. At 1440px the fil
 
 The homepage header now matches the supplied utility treatment: the existing quiet
 text-link styling is reused for Resume, with the supplied 15px download SVG and 18px
-LinkedIn SVG. Both use the established ink, accent focus outline, spacing, hover
-opacity and sticky responsive header rules. Desktop and 375px layouts have no
+LinkedIn SVG. Both use the established ink, accent focus outline, spacing, text-contrast
+hover and sticky responsive header rules. Desktop and 375px layouts have no
 horizontal overflow.
 
 ## Portable private-access engine — 2026-10-15

@@ -970,15 +970,29 @@
     });
   }
   var navLinks = $$(".nav-links a");
+  function setActiveNav(g) {
+    navLinks.forEach(function (a) {
+      a.classList.toggle("on", !!g && a.getAttribute("data-g") === g);
+    });
+  }
+  function setActiveNavFromHash() {
+    var target = document.getElementById(window.location.hash.slice(1));
+    setActiveNav(target ? target.getAttribute("data-g") || "" : "");
+  }
+  navLinks.forEach(function (a) {
+    a.addEventListener("click", function () {
+      setActiveNav(a.getAttribute("data-g") || "");
+    });
+  });
+  window.addEventListener("hashchange", setActiveNavFromHash);
+  setActiveNavFromHash();
   if ("IntersectionObserver" in window) {
     var nio = new IntersectionObserver(
       function (es) {
         es.forEach(function (e) {
           if (!e.isIntersecting) return;
           var g = e.target.getAttribute("data-g") || "";
-          navLinks.forEach(function (a) {
-            a.classList.toggle("on", !!g && a.getAttribute("data-g") === g);
-          });
+          setActiveNav(g);
         });
       },
       { rootMargin: "-45% 0px -50% 0px" },
@@ -1102,14 +1116,239 @@
       pick(i);
     });
   });
-  var vbs = $$(".vsel button");
-  vbs.forEach(function (b, i) {
-    b.addEventListener("click", function () {
-      vbs.forEach(function (x, j) {
-        x.setAttribute("aria-pressed", j === i ? "true" : "false");
-        var q = document.getElementById("v" + j);
-        if (q) q.hidden = j !== i;
-      });
+  var vbs = $$(".vsel button"),
+    vsel = $(".vsel"),
+    voiceStage = $("#voices .vq"),
+    voiceGrids = voiceStage ? $$(".rgrid", voiceStage) : [],
+    voiceCurrent = 0,
+    voiceTarget = 0,
+    voiceToken = 0,
+    voiceAnimations = [];
+  voiceGrids.forEach(function (grid, i) {
+    if (!grid.hidden) voiceCurrent = voiceTarget = i;
+  });
+  function placeVoiceIndicator() {
+    if (!vsel || !vbs.length) return;
+    var active = vbs[voiceTarget] || vbs[voiceCurrent];
+    vsel.style.setProperty("--vi-x", active.offsetLeft + "px");
+    vsel.style.setProperty("--vi-y", active.offsetTop + "px");
+    vsel.style.setProperty("--vi-w", active.offsetWidth + "px");
+    vsel.style.setProperty("--vi-h", active.offsetHeight + "px");
+    vsel.classList.add("vi-ready");
+  }
+  function setVoiceControls(i) {
+    voiceTarget = i;
+    vbs.forEach(function (button, j) {
+      button.setAttribute("aria-pressed", j === i ? "true" : "false");
+    });
+    placeVoiceIndicator();
+  }
+  function clearVoiceStyles(grid) {
+    ["position", "left", "right", "top", "width", "visibility"].forEach(function (name) {
+      grid.style.removeProperty(name);
+    });
+  }
+  function settleVoice(i) {
+    voiceAnimations.forEach(function (animation) {
+      animation.cancel();
+    });
+    voiceAnimations = [];
+    voiceGrids.forEach(function (grid, j) {
+      grid.hidden = j !== i;
+      clearVoiceStyles(grid);
+    });
+    if (voiceStage) {
+      voiceStage.style.removeProperty("height");
+      voiceStage.style.removeProperty("overflow");
+    }
+    voiceCurrent = voiceTarget = i;
+  }
+  function showVoice(i) {
+    if (!voiceStage || !voiceGrids[i]) return;
+    if (voiceAnimations.length) {
+      voiceToken++;
+      settleVoice(voiceTarget);
+    }
+    if (i === voiceCurrent) {
+      setVoiceControls(i);
+      return;
+    }
+    var current = voiceGrids[voiceCurrent],
+      next = voiceGrids[i];
+    setVoiceControls(i);
+    if (reduce || typeof current.animate !== "function") {
+      settleVoice(i);
+      return;
+    }
+    var token = ++voiceToken,
+      fromHeight = current.offsetHeight;
+    next.hidden = false;
+    next.style.position = "absolute";
+    next.style.left = "0";
+    next.style.right = "0";
+    next.style.top = "0";
+    next.style.width = "100%";
+    next.style.visibility = "hidden";
+    var toHeight = next.offsetHeight;
+    next.style.visibility = "";
+    voiceStage.style.height = fromHeight + "px";
+    voiceStage.style.overflow = "hidden";
+    current.style.position = "absolute";
+    current.style.left = "0";
+    current.style.right = "0";
+    current.style.top = "0";
+    current.style.width = "100%";
+    voiceAnimations = [
+      voiceStage.animate(
+        [{ height: fromHeight + "px" }, { height: toHeight + "px" }],
+        { duration: 560, easing: "cubic-bezier(.2,.7,.2,1)", fill: "forwards" },
+      ),
+      current.animate(
+        [
+          { opacity: 1, transform: "translateY(0)" },
+          { opacity: 0, transform: "translateY(-6px)" },
+        ],
+        { duration: 250, easing: "ease-out", fill: "forwards" },
+      ),
+    ];
+    $$(".rc", next).forEach(function (card, j) {
+      voiceAnimations.push(
+        card.animate(
+          [
+            { opacity: 0, transform: "translateY(6px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          {
+            duration: 440,
+            delay: 100 + j * 55,
+            easing: "cubic-bezier(.2,.7,.2,1)",
+            fill: "both",
+          },
+        ),
+      );
+    });
+    Promise.all(
+      voiceAnimations.map(function (animation) {
+        return animation.finished.catch(function () {});
+      }),
+    ).then(function () {
+      if (token !== voiceToken) return;
+      settleVoice(i);
+    });
+  }
+  vbs.forEach(function (button, i) {
+    button.addEventListener("click", function () {
+      showVoice(i);
+    });
+  });
+  requestAnimationFrame(placeVoiceIndicator);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeVoiceIndicator);
+  window.addEventListener("resize", placeVoiceIndicator);
+
+  var detailRuns = new WeakSet(),
+    detailBefore = new WeakMap();
+  function prepareRecommendation(details) {
+    if (
+      reduce ||
+      detailRuns.has(details) ||
+      detailBefore.has(details) ||
+      typeof details.animate !== "function"
+    )
+      return;
+    var grid = details.closest(".rgrid"),
+      stage = details.closest(".vq");
+    if (!grid || !stage) return;
+    var cards = $$(".rc", grid),
+      state = {
+        grid: grid,
+        stage: stage,
+        cards: cards,
+        rects: cards.map(function (card) {
+          return card.getBoundingClientRect();
+        }),
+        height: stage.offsetHeight,
+      };
+    detailBefore.set(details, state);
+    stage.style.height = state.height + "px";
+    stage.style.overflow = "hidden";
+  }
+  function morphRecommendation(details) {
+    var state = detailBefore.get(details);
+    if (!state || detailRuns.has(details)) return;
+    detailBefore.delete(details);
+    detailRuns.add(details);
+    var body = $(".vf-text", details),
+      animations = [
+        state.stage.animate(
+          [{ height: state.height + "px" }, { height: state.grid.offsetHeight + "px" }],
+          { duration: 540, easing: "cubic-bezier(.2,.7,.2,1)", fill: "forwards" },
+        ),
+      ];
+    state.cards.forEach(function (card, i) {
+      var after = card.getBoundingClientRect(),
+        old = state.rects[i],
+        dx = old.left - after.left,
+        dy = old.top - after.top,
+        sx = old.width / after.width,
+        sy = old.height / after.height;
+      animations.push(
+        card.animate(
+          [
+            {
+              transformOrigin: "top left",
+              transform:
+                "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")",
+            },
+            { transformOrigin: "top left", transform: "none" },
+          ],
+          { duration: 540, easing: "cubic-bezier(.2,.7,.2,1)" },
+        ),
+      );
+    });
+    if (details.open && body) {
+      animations.push(
+        body.animate(
+          [
+            { opacity: 0, transform: "translateY(6px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          {
+            duration: 360,
+            delay: 120,
+            easing: "cubic-bezier(.2,.7,.2,1)",
+            fill: "both",
+          },
+        ),
+      );
+    }
+    Promise.all(
+      animations.map(function (animation) {
+        return animation.finished.catch(function () {});
+      }),
+    ).then(function () {
+      state.stage.style.removeProperty("height");
+      state.stage.style.removeProperty("overflow");
+      detailRuns.delete(details);
+    });
+  }
+  $$(".rc-more").forEach(function (details) {
+    var summary = $("summary", details);
+    if (!summary) return;
+    summary.addEventListener(
+      "click",
+      function (event) {
+        if (reduce) return;
+        if (detailRuns.has(details)) {
+          event.preventDefault();
+          return;
+        }
+        prepareRecommendation(details);
+      },
+      true,
+    );
+    details.addEventListener("toggle", function () {
+      if (reduce) return;
+      morphRecommendation(details);
     });
   });
 
@@ -4142,7 +4381,7 @@
     plan.forEach(function (p, i) { ph += d(560 + i * 205, 600, 190, 92, 'border:1px solid ' + LINE + ';border-radius:14px;opacity:0;background:#fff', tx(18, 18, 13, 400, MUT, '0' + (i + 1)) + tx(18, 40, 18, 700, INK, p[0]) + tx(18, 66, 12, 400, MUT, p[1]), 'data-plan="' + i + '"'); });
     return top() +
       tx(0, 300, 15, 400, MUT, 'What should your data do?', 'data-q', 'left:0;width:1920px;text-align:center') +
-      d(460, 340, 1000, 84, 'border:1.5px solid ' + INK + ';border-radius:42px;background:#fff', tx(38, 25, 26, 400, INK, '<span data-int></span><span data-car style="display:inline-block;width:2px;height:28px;background:' + INK + ';vertical-align:-5px;margin-left:2px"></span>') + '<span class="pf-a" data-go style="right:14px;top:14px;width:56px;height:56px;border-radius:50%;background:' + INK + ';display:grid;place-items:center;color:#fff;font:400 26px/1 PFLato">↑</span>') +
+      d(460, 340, 1000, 84, 'border:1.5px solid ' + INK + ';border-radius:42px;background:#fff', tx(38, 25, 26, 400, INK, '<span data-int></span><span data-car style="display:inline-block;width:2px;height:28px;background:' + INK + ';vertical-align:-5px;margin-left:2px"></span>') + '<span class="pf-a" data-go style="right:14px;top:14px;width:56px;height:56px;border-radius:50%;background:' + INK + ';display:grid;place-items:center;color:#fff;font:400 26px/1 PFLato"><span class="chev chev-u"></span></span>') +
       tx(0, 470, 15, 400, MUT, '', 'data-compile', 'left:0;width:1920px;text-align:center;opacity:0') + ph +
       tx(0, 760, 13, 400, '#9A9A9A', 'No pipelines to build. No steps to click.', 'data-foot', 'left:0;width:1920px;text-align:center;opacity:0');
   }, run: function (s, t) {
@@ -4263,7 +4502,7 @@
 
   // V6 — Explainability: pull the thread, scrub through time
   SC.push({ act: 2, dur: 7600, html: function () {
-    var nodes = [[140, 'ehr_encounters', 'source'], [140, 'claims_2024', 'source'], [140, 'rx_fills', 'source'], [600, 'Scrubber', 'phone → E.164'], [600, 'Guardian', 'mask MRN, name'], [1060, 'Resolver', 'dob ✓ last_name ✓ phone 0.94'], [1520, 'Gold record', 'Patient ••••4821']], h = '', ln = '';
+    var nodes = [[140, 'ehr_encounters', 'source'], [140, 'claims_2024', 'source'], [140, 'rx_fills', 'source'], [600, 'Scrubber', 'phone <span class="chev chev-r chev-sep"></span> E.164'], [600, 'Guardian', 'mask MRN, name'], [1060, 'Resolver', 'dob ✓ last_name ✓ phone 0.94'], [1520, 'Gold record', 'Patient ••••4821']], h = '', ln = '';
     var Y = [330, 450, 570, 390, 510, 450, 450];
     nodes.forEach(function (n, i) { h += d(n[0], Y[i] - 34, 300, 68, 'border:1.5px solid ' + (i === 6 ? INK : '#CFCFCF') + ';border-radius:14px;background:' + (i === 6 ? INK : '#fff') + ';opacity:0', tx(20, 12, 16, 700, i === 6 ? '#fff' : INK, n[1]) + tx(20, 38, 12, 400, i === 6 ? '#BDBDBD' : MUT, n[2]), 'data-tn="' + i + '"'); });
     var E = [[0, 3], [1, 3], [2, 4], [3, 5], [4, 5], [5, 6]];

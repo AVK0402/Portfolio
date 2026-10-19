@@ -75,7 +75,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                 </p>
               ) : null}
               <button type="submit" className={styles.button}>
-                View portfolio <span aria-hidden="true">→</span>
+                View portfolio <span className={styles.chevron} aria-hidden="true" />
               </button>
             </form>
           ) : (
